@@ -1,0 +1,5 @@
+D:\7 сем\Курсач\kur\DAL\bin\Debug\DAL.dll
+D:\7 сем\Курсач\kur\DAL\bin\Debug\DAL.pdb
+D:\7 сем\Курсач\kur\DAL\obj\Debug\DAL.csprojResolveAssemblyReference.cache
+D:\7 сем\Курсач\kur\DAL\obj\Debug\DAL.dll
+D:\7 сем\Курсач\kur\DAL\obj\Debug\DAL.pdb

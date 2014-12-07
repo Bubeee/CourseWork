@@ -1,0 +1,32 @@
+﻿@model WebUI.DAL.Entities.Product
+@{
+  ViewBag.Title = "Index";
+}
+
+<h2>Amazing product list</h2>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Модель</th>
+      <th>Изготовитель</th>
+      <th>Цена</th>
+      <th>Гарантия</th>
+      <th>Доставка</th>
+      <th>Изображение</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>@Html.DisplayFor(m => m.Id)</td>
+      <td>@Html.DisplayFor(m => m.Model)</td>
+      <td>@Html.DisplayFor(m => m.ManufacturerId)</td>
+      <td>@Html.DisplayFor(m => m.Price)</td>
+      <td>@Html.DisplayFor(m => m.Warranty)</td>
+      <td>@Html.DisplayFor(m => m.DeliveryId)</td>
+      <td>@Html.DisplayFor(m => m.Picture)</td>
+    </tr>
+  </tbody>
+</table>

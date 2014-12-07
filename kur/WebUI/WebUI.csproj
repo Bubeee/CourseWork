@@ -153,6 +153,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="DAL\Entities\Category.cs" />
     <Compile Include="DAL\Entities\Product.cs" />
     <Compile Include="DAL\Entities\ProductType.cs" />
     <Compile Include="DAL\Entities\ProductTypeCreate.cs" />

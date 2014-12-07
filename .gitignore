@@ -36,3 +36,6 @@ Icon
 .Trashes
 
 *.suo
+*.suo
+bin
+obj

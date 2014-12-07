@@ -1,5 +1,4 @@
 ﻿using System.Web.Mvc;
-using WebUI.DAL;
 using WebUI.DAL.Entities;
 using WebUI.DAL.LeshaBd.Repositories;
 
@@ -16,7 +15,18 @@ namespace WebUI.Controllers
       return View(product);
     }
 
-    //public ActionResult AddProduct(Product newProduct)
+    public ActionResult AddProduct()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult AddProduct(Product newProduct)
+    {
+      return View();
+    }
+
+    //public ActionResult SearchProducts()
     //{
       
     //}

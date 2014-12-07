@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using WebUI.DAL;
 using WebUI.DAL.Entities;
+using WebUI.DAL.Repositories;
 
 namespace WebUI.Controllers
 {

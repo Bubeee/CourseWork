@@ -3,7 +3,7 @@ using System.Data;
 using System.Data.SqlClient;
 using WebUI.DAL.Entities;
 
-namespace WebUI.DAL
+namespace WebUI.DAL.Repositories
 {
   public class ProductRepository
   {

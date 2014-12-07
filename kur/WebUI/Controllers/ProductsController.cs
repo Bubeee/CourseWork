@@ -1,7 +1,7 @@
 ﻿using System.Web.Mvc;
 using WebUI.DAL;
 using WebUI.DAL.Entities;
-using WebUI.DAL.Repositories;
+using WebUI.DAL.LeshaBd.Repositories;
 
 namespace WebUI.Controllers
 {

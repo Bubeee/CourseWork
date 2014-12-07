@@ -157,7 +157,7 @@
     <Compile Include="DAL\Entities\ProductType.cs" />
     <Compile Include="DAL\Entities\ProductTypeCreate.cs" />
     <Compile Include="DAL\Entities\ProductTypeFields.cs" />
-    <Compile Include="DAL\Repositories\ProductRepository.cs" />
+    <Compile Include="DAL\LeshaBd\Repositories\ProductRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -203,6 +203,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="DAL\Interfaces\" />
+    <Folder Include="DAL\VovaBd\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>

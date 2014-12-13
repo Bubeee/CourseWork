@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Interfaces.Interfaces;
 
-namespace WebUI.DAL.Entities
+namespace Interfaces.Entities
 {
-  public class ProductTypeFields
+  public class ProductTypeFields : IEntity
   {
     public string Name { get; set; }
     public short AttributeType { get; set; }

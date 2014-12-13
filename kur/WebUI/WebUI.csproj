@@ -153,12 +153,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
-    <Compile Include="DAL\Entities\Category.cs" />
-    <Compile Include="DAL\Entities\Product.cs" />
-    <Compile Include="DAL\Entities\ProductType.cs" />
-    <Compile Include="DAL\Entities\ProductTypeCreate.cs" />
-    <Compile Include="DAL\Entities\ProductTypeFields.cs" />
-    <Compile Include="DAL\LeshaBd\Repositories\ProductRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -204,8 +198,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="DAL\Interfaces\" />
-    <Folder Include="DAL\VovaBd\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -214,6 +206,16 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DalAlexey\DalAlexey.csproj">
+      <Project>{9E6C26B8-5D27-4192-BAE3-F39940EB5A52}</Project>
+      <Name>DalAlexey</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{21EE8D13-CFAC-47E4-A0BC-B2100C24BB21}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,16 +1,22 @@
 ﻿using System.Web.Mvc;
-using WebUI.DAL.Entities;
-using WebUI.DAL.LeshaBd.Repositories;
+using Interfaces.Entities;
+using Interfaces.Interfaces;
 
 namespace WebUI.Controllers
 {
   public class ProductsController : Controller
   {
-    private readonly ProductRepository _repo = new ProductRepository();
+    private readonly IRepository<Product> _repo;
+
+    public ProductsController(IRepository<Product> repo)
+    {
+      _repo = repo;
+    }
+
     // GET: Products
     public ActionResult Index()
     {
-      var product = _repo.GetProductFullManyQueries(1);
+      var product = _repo.GetById(1);
 
       return View(product);
     }
@@ -28,7 +34,7 @@ namespace WebUI.Controllers
 
     //public ActionResult SearchProducts()
     //{
-      
+
     //}
   }
 }

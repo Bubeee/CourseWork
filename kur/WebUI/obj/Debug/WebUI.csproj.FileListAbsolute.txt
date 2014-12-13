@@ -108,3 +108,7 @@ d:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.OAuth.
 d:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.Google.xml
 d:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.Twitter.xml
 d:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\DalAlexey.dll
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Interfaces.dll
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\DalAlexey.pdb
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Interfaces.pdb

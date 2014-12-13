@@ -1,6 +1,8 @@
-﻿namespace WebUI.DAL.Entities
+﻿using Interfaces.Interfaces;
+
+namespace Interfaces.Entities
 {
-  public class Product
+  public class Product : IEntity
   {
     public int Id { get; set; }
     public string Model { get; set; }

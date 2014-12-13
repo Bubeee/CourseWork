@@ -1,13 +1,14 @@
 ﻿using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using WebUI.DAL.Entities;
+using Interfaces.Entities;
+using Interfaces.Interfaces;
 
-namespace WebUI.DAL.LeshaBd.Repositories
+namespace DalAlexey.Repositories
 {
-  public class ProductRepository
+  public class ProductRepository : IRepository<Product>
   {
-    public Product GetProductFullManyQueries(int productId)
+    public Product GetById(int productId)
     {
       var product = new Product();
       using (var connection = new SqlConnection((ConfigurationManager.ConnectionStrings["kur"].ConnectionString)))

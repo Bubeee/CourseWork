@@ -1,6 +1,8 @@
-﻿namespace WebUI.DAL.Entities
+﻿using Interfaces.Interfaces;
+
+namespace Interfaces.Entities
 {
-  public class Category
+  public class Category : IEntity
   {
     public int Id { get; set; }
     public string Name { get; set; }

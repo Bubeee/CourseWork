@@ -74,8 +74,8 @@ CREATE TABLE [Manufacturer] (
 
 CREATE TABLE [Attributes] ( 
 	[Id] int identity(1,1)  NOT NULL,
-	[Description] nvarchar(50) NOT NULL,
-	[Product] int NULL
+	[Name] nvarchar(20) NOT NULL,
+	[Description] nvarchar(50) NOT NULL
 );
 
 CREATE TABLE [Categories] ( 

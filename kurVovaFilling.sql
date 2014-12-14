@@ -37,5 +37,5 @@ VALUES (N'Tefal 2322', 676300, N'2 years', N'Files/225.jpg', 8, 1, 1, 1, NULL);
 
 
 GO
-INSERT INTO [dbo].[Attributes] ([Name], [Price], [Warranty], [Picture], [Count], [TypeId], [DeliveryId], [ManufacturerId], [StorageId])
-VALUES (N'Tefal12', 500000, N'2 years', N'Files/222.jpg', 8, 1, 1, 1, NULL);
+INSERT INTO [dbo].[Attributes] ([Description])
+VALUES (N'')

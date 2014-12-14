@@ -1,0 +1,4 @@
+                //--string - 1
+                //--int - 2
+                //--float - 3
+                //--enum - 4

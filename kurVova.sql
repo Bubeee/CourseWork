@@ -1,8 +1,16 @@
+USE [master]
+DROP DATABASE [kur_Vova]
+CREATE DATABASE [kur_Vova]
+USE [kur_Vova]
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_ProductsHasAttributes_Attributes]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE [ProductsHasAttributes] DROP CONSTRAINT [FK_ProductsHasAttributes_Attributes];
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_ProductsHasAttributes_Products]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE [ProductsHasAttributes] DROP CONSTRAINT [FK_ProductsHasAttributes_Products];
+
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Types_Categories]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE [Types] DROP CONSTRAINT [FK_Types_Categories];
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Products_Attributes]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE [Products] DROP CONSTRAINT [FK_Products_Attributes];
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Products_Delivery]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE [Products] DROP CONSTRAINT [FK_Products_Delivery];
@@ -17,6 +25,9 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Products_Types
 ALTER TABLE [Products] DROP CONSTRAINT [FK_Products_Types];
 
 
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[ProductsHasAttributes]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE [ProductsHasAttributes];
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Storage]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE [Storage];
@@ -39,6 +50,11 @@ DROP TABLE [Types];
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Products]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE [Products];
 
+
+CREATE TABLE [ProductsHasAttributes] ( 
+	[ProductId] int NOT NULL,
+	[AttributeId] int NOT NULL
+);
 
 CREATE TABLE [Storage] ( 
 	[Id] int identity(1,1)  NOT NULL,
@@ -82,12 +98,14 @@ CREATE TABLE [Products] (
 	[Picture] nvarchar(50) NULL,
 	[Count] int NULL,
 	[TypeId] int NULL,
-	[Attributes] int NULL,
 	[ManufacturerId] int NULL,
 	[DeliveryId] int NULL,
 	[StorageId] int NULL
 );
 
+
+ALTER TABLE [ProductsHasAttributes] ADD CONSTRAINT [PK_ProductsHasAttributes] 
+	PRIMARY KEY CLUSTERED ([ProductId], [AttributeId]);
 
 ALTER TABLE [Storage] ADD CONSTRAINT [PK_Storage] 
 	PRIMARY KEY CLUSTERED ([Id]);
@@ -112,12 +130,15 @@ ALTER TABLE [Products] ADD CONSTRAINT [PK_Product]
 
 
 
+ALTER TABLE [ProductsHasAttributes] ADD CONSTRAINT [FK_ProductsHasAttributes_Attributes] 
+	FOREIGN KEY ([AttributeId]) REFERENCES [Attributes] ([Id]);
+
+ALTER TABLE [ProductsHasAttributes] ADD CONSTRAINT [FK_ProductsHasAttributes_Products] 
+	FOREIGN KEY ([ProductId]) REFERENCES [Products] ([Id]);
+
 ALTER TABLE [Types] ADD CONSTRAINT [FK_Types_Categories] 
 	FOREIGN KEY ([CategoryId]) REFERENCES [Categories] ([Id])
 	ON DELETE NO ACTION ON UPDATE NO ACTION;
-
-ALTER TABLE [Products] ADD CONSTRAINT [FK_Products_Attributes] 
-	FOREIGN KEY ([Attributes]) REFERENCES [Attributes] ([Id]);
 
 ALTER TABLE [Products] ADD CONSTRAINT [FK_Products_Delivery] 
 	FOREIGN KEY ([DeliveryId]) REFERENCES [Delivery] ([Id])

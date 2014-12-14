@@ -1,13 +1,21 @@
-USE [master]
 DROP DATABASE [kur_Vova]
+
 CREATE DATABASE [kur_Vova]
+
 USE [kur_Vova]
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_ProductsHasAttributes_Attributes]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE [ProductsHasAttributes] DROP CONSTRAINT [FK_ProductsHasAttributes_Attributes];
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_ProductsHasAttributes_Products]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE [ProductsHasAttributes] DROP CONSTRAINT [FK_ProductsHasAttributes_Products];
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Enum_Attribute_desctription]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE [Enum] DROP CONSTRAINT [FK_Enum_Attribute_desctription];
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Attribute_Types]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE [AttributeDescription] DROP CONSTRAINT [FK_Attribute_Types];
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Attribute_Attribute_desctription]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE [Attribute] DROP CONSTRAINT [FK_Attribute_Attribute_desctription];
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Attribute_Products]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE [Attribute] DROP CONSTRAINT [FK_Attribute_Products];
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Types_Categories]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE [Types] DROP CONSTRAINT [FK_Types_Categories];
@@ -26,8 +34,11 @@ ALTER TABLE [Products] DROP CONSTRAINT [FK_Products_Types];
 
 
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[ProductsHasAttributes]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE [ProductsHasAttributes];
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Enum]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE [Enum];
+
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[AttributeDescription]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE [AttributeDescription];
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Storage]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE [Storage];
@@ -38,8 +49,8 @@ DROP TABLE [Delivery];
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Manufacturer]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE [Manufacturer];
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Attributes]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE [Attributes];
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Attribute]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE [Attribute];
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Categories]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE [Categories];
@@ -51,9 +62,17 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Products]') AND  
 DROP TABLE [Products];
 
 
-CREATE TABLE [ProductsHasAttributes] ( 
-	[ProductId] int NOT NULL,
-	[AttributeId] int NOT NULL
+CREATE TABLE [Enum] ( 
+	[Id] int identity(1,1)  NOT NULL,
+	[AttributeId] int NOT NULL,
+	[Value] nvarchar(20) NOT NULL
+);
+
+CREATE TABLE [AttributeDescription] ( 
+	[Id] int identity(1,1)  NOT NULL,
+	[TypeId] int NOT NULL,
+	[Name] nvarchar(20) NOT NULL,
+	[AttributeType] int NOT NULL
 );
 
 CREATE TABLE [Storage] ( 
@@ -72,10 +91,11 @@ CREATE TABLE [Manufacturer] (
 	[Info] text NULL
 );
 
-CREATE TABLE [Attributes] ( 
+CREATE TABLE [Attribute] ( 
 	[Id] int identity(1,1)  NOT NULL,
-	[Name] nvarchar(20) NOT NULL,
-	[Description] nvarchar(50) NOT NULL
+	[Value] nvarchar(50) NOT NULL,
+	[ProductId] int NOT NULL,
+	[AttributeDescriptionId] int NOT NULL
 );
 
 CREATE TABLE [Categories] ( 
@@ -104,8 +124,11 @@ CREATE TABLE [Products] (
 );
 
 
-ALTER TABLE [ProductsHasAttributes] ADD CONSTRAINT [PK_ProductsHasAttributes] 
-	PRIMARY KEY CLUSTERED ([ProductId], [AttributeId]);
+ALTER TABLE [Enum] ADD CONSTRAINT [PK_Enum] 
+	PRIMARY KEY CLUSTERED ([Id]);
+
+ALTER TABLE [AttributeDescription] ADD CONSTRAINT [PK_Attribute] 
+	PRIMARY KEY CLUSTERED ([Id]);
 
 ALTER TABLE [Storage] ADD CONSTRAINT [PK_Storage] 
 	PRIMARY KEY CLUSTERED ([Id]);
@@ -116,7 +139,7 @@ ALTER TABLE [Delivery] ADD CONSTRAINT [PK_Delivery]
 ALTER TABLE [Manufacturer] ADD CONSTRAINT [PK_Manufacturer] 
 	PRIMARY KEY CLUSTERED ([Id]);
 
-ALTER TABLE [Attributes] ADD CONSTRAINT [PK_Attributes] 
+ALTER TABLE [Attribute] ADD CONSTRAINT [PK_Attributes] 
 	PRIMARY KEY CLUSTERED ([Id]);
 
 ALTER TABLE [Categories] ADD CONSTRAINT [PK_Category] 
@@ -130,10 +153,16 @@ ALTER TABLE [Products] ADD CONSTRAINT [PK_Product]
 
 
 
-ALTER TABLE [ProductsHasAttributes] ADD CONSTRAINT [FK_ProductsHasAttributes_Attributes] 
-	FOREIGN KEY ([AttributeId]) REFERENCES [Attributes] ([Id]);
+ALTER TABLE [Enum] ADD CONSTRAINT [FK_Enum_Attribute_desctription] 
+	FOREIGN KEY ([AttributeId]) REFERENCES [AttributeDescription] ([Id]);
 
-ALTER TABLE [ProductsHasAttributes] ADD CONSTRAINT [FK_ProductsHasAttributes_Products] 
+ALTER TABLE [AttributeDescription] ADD CONSTRAINT [FK_Attribute_Types] 
+	FOREIGN KEY ([TypeId]) REFERENCES [Types] ([Id]);
+
+ALTER TABLE [Attribute] ADD CONSTRAINT [FK_Attribute_Attribute_desctription] 
+	FOREIGN KEY ([AttributeDescriptionId]) REFERENCES [AttributeDescription] ([Id]);
+
+ALTER TABLE [Attribute] ADD CONSTRAINT [FK_Attribute_Products] 
 	FOREIGN KEY ([ProductId]) REFERENCES [Products] ([Id]);
 
 ALTER TABLE [Types] ADD CONSTRAINT [FK_Types_Categories] 

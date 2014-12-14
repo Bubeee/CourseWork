@@ -1,9 +1,11 @@
+USE [kur] 
+GO
 DROP DATABASE [kur_Vova]
-
+GO
 CREATE DATABASE [kur_Vova]
-
+GO
 USE [kur_Vova]
-
+GO
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Enum_Attribute_desctription]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE [Enum] DROP CONSTRAINT [FK_Enum_Attribute_desctription];

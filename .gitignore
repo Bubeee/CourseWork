@@ -40,3 +40,6 @@ Icon
 bin
 obj
 kur/kur.v12.suo
+*.dll
+*.dll
+*.pdb

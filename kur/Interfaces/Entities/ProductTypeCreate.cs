@@ -6,6 +6,7 @@ namespace Interfaces.Entities
   public class ProductTypeCreate : IEntity
   {
     public string TypeName { get; set; }
+    public int CategoryId { get; set; }
     public List<ProductTypeFields> Attributes { get; set; }
   }
 }

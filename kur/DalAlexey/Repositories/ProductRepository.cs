@@ -1,4 +1,5 @@
-﻿using System.Configuration;
+﻿using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using Interfaces.Entities;
@@ -67,5 +68,10 @@ namespace DalAlexey.Repositories
           }
           return product;
       }
+
+    public IEnumerable<Product> GetAll()
+    {
+      throw new System.NotImplementedException();
+    }
   }
 }

@@ -9,7 +9,7 @@ using Interfaces.Entities;
 
 namespace DalAlexey.Repositories
 {
-    class ProductTypeRepository
+  public class ProductTypeRepository
     {
         public static string connectionString = @"Data Source=BUMBLEBEE\SQLEXPRESS;Integrated Security=true";
         public static string workDatabaseName = "kur";

@@ -168,3 +168,7 @@ F:\git\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.OAuth.xml
 F:\git\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.Google.xml
 F:\git\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.Twitter.xml
 F:\git\CourseWork\kur\WebUI\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Autofac.dll
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\DalUladzimir.dll
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\DalUladzimir.pdb
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Autofac.xml

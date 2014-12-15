@@ -10,7 +10,7 @@ namespace Interfaces.Entities
     public List<string> AttributeNames { get; set; }
     public ProductType()
     {
-        AttributeNames = new List<string>();
+      AttributeNames = new List<string>();
     }
   }
 }

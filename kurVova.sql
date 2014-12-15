@@ -1,4 +1,4 @@
-USE [kur] 
+USE [master] 
 GO
 DROP DATABASE [kur_Vova]
 GO

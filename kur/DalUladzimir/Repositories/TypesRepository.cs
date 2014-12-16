@@ -21,7 +21,7 @@ namespace DalUladzimir.Repositories
       using (var connection = new SqlConnection(conString))
       {
         var command = new SqlCommand(query, connection);
-        command.Parameters.Add(new SqlParameter("categoryId", categoryId));
+        command.Parameters.Add(new SqlParameter("@categoryId", categoryId));
         connection.Open();
         using (var reader = command.ExecuteReader())
         {
@@ -41,14 +41,56 @@ namespace DalUladzimir.Repositories
       return types;
     }
 
-    public int Create(ProductCreate model)
+    public int Create(ProductTypeCreate model)
     {
-      throw new NotImplementedException();
+      int typeId;
+
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "INSERT INTO [dbo].[Types] ([Name], [CategoryId]) " +
+                  "VALUES (@typeName, @categoryId)";
+
+      using (var connection = new SqlConnection(conString))
+      {
+        using (var command = new SqlCommand(query, connection))
+        {
+          command.Parameters.Add(new SqlParameter("@categoryId", model.CategoryId));
+          command.Parameters.Add(new SqlParameter("@typeName", model.TypeName));
+          connection.Open();
+          newId = (int)command.ExecuteScalar();
+        }
+
+
+
+      }
+
+      return type;
     }
 
     public ProductType GetById(int id)
     {
-      throw new NotImplementedException();
+      var type = new ProductType();
+
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "SELECT [Id], [Name]" +
+                  "FROM [dbo].[Types]" +
+                  "WHERE [Id] = @typeId";
+
+      using (var connection = new SqlConnection(conString))
+      {
+        var command = new SqlCommand(query, connection);
+        command.Parameters.Add(new SqlParameter("@typeId", id));
+        connection.Open();
+        using (var reader = command.ExecuteReader())
+        {
+          while (reader.Read())
+          {
+            type.Id = (int)reader[0];
+            type.Name = (string)reader[1];
+          }
+        }
+      }
+
+      return type;
     }
   }
 }

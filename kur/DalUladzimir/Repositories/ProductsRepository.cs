@@ -63,7 +63,7 @@ namespace DalUladzimir.Repositories
               Price = (int)reader[2],
               Warranty = (string)reader[3],
               Picture = (string)reader[4],
-              Count = (int?)reader[5],
+              Count = (int)reader[5],
               ProductType = new ProductType
               {
                 Id = (int)reader[6],

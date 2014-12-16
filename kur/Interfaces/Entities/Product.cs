@@ -13,7 +13,7 @@ namespace Interfaces.Entities
     public string Warranty { get; set; }
     public string Delivery { get; set; }
     public string Picture { get; set; }
-    public int? Count { get; set; }
+    public int Count { get; set; }
     public string StorageSerial { get; set; }
     public List<string> Attributes { get; set; }
     public ProductType ProductType { get; set; }

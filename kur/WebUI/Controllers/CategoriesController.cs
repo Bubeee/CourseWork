@@ -22,5 +22,21 @@ namespace WebUI.Controllers
 
       return View(categories);
     }
+
+    public ActionResult CreateCategory()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult CreateCategory(Category category)
+    {
+      if (category != null)
+      {
+        _repository.Create(category); 
+      }
+
+      return RedirectToAction("Index");
+    }
   }
 }

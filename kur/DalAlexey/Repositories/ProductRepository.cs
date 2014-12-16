@@ -7,7 +7,7 @@ using Interfaces.Interfaces;
 
 namespace DalAlexey.Repositories
 {
-  public class ProductRepository : IRepository<Product>
+  public class ProductRepository : IProductRepository
   {
       public static string connectionString = @"Data Source=BUMBLEBEE\SQLEXPRESS;Integrated Security=true";
       public static string workDatabaseName = "kur";
@@ -66,6 +66,16 @@ namespace DalAlexey.Repositories
           }
           return product;
       }
+
+    public int Create(ProductCreate model)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public IEnumerable<Product> GetProductsByType(int typeId)
+    {
+      throw new System.NotImplementedException();
+    }
 
     public IEnumerable<Product> GetAll()
     {

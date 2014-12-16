@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Interfaces.Entities
 {
-    class ProductCreate
+    public class ProductCreate
     {
         public int Id { get; set; }
         public string Name { get; set; }

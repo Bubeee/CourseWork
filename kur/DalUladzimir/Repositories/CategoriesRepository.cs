@@ -6,7 +6,7 @@ using Interfaces.Interfaces;
 
 namespace DalUladzimir.Repositories
 {
-  public class CategoriesRepository : IRepository<Category>
+  public class CategoriesRepository : ICategoriesRepository
   {
     public Category GetById(int id)
     {
@@ -36,7 +36,7 @@ namespace DalUladzimir.Repositories
       return category;
     }
 
-    public IEnumerable<Category> GetAll()
+    public IEnumerable<Category> GetAllCategories()
     {
       var categories = new List<Category>();
 
@@ -65,6 +65,11 @@ namespace DalUladzimir.Repositories
       }
 
       return categories;
+    }
+
+    public int Create(Category model)
+    {
+      throw new System.NotImplementedException();
     }
   }
 }

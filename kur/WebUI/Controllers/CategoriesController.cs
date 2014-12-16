@@ -7,9 +7,9 @@ namespace WebUI.Controllers
 {
   public class CategoriesController : Controller
   {
-    private readonly IRepository<Category> _repository;
+    private readonly ICategoriesRepository _repository;
 
-    public CategoriesController(IRepository<Category> repository)
+    public CategoriesController(ICategoriesRepository repository)
     {
       _repository = repository;
     }
@@ -18,7 +18,7 @@ namespace WebUI.Controllers
     public ActionResult Index()
     {
       var categories = new List<Category>();
-      categories.AddRange(_repository.GetAll());
+      categories.AddRange(_repository.GetAllCategories());
 
       return View(categories);
     }

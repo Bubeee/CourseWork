@@ -3,7 +3,7 @@ using Interfaces.Entities;
 
 namespace Interfaces.Interfaces
 {
-  public interface IProductRepository : IRepository<Product>
+  public interface IProductRepository : IRepository<ProductCreate, Product>
   {
     IEnumerable<Product> GetProductsByType(int typeId);
   }

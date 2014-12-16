@@ -14,7 +14,7 @@ namespace DalUladzimir.Repositories
       throw new NotImplementedException();
     }
 
-    public IEnumerable<Product> GetAll()
+    public int Create(ProductCreate model)
     {
       throw new NotImplementedException();
     }

@@ -13,14 +13,14 @@ namespace WebUI.AutoFacModules
     {
       if (LoadAlexey)
       {
-        builder.RegisterType<ProductRepository>().As<IRepository<Product>>();
-        builder.RegisterType<ProductTypeRepository>().As<IRepository<ProductType>>();
+        builder.RegisterType<ProductRepository>().As<IProductRepository>();
+        builder.RegisterType<ProductTypeRepository>().As<ITypesRepository>();
       }
       else
       {
         builder.RegisterType<ProductsRepository>().As<IProductRepository>();
         builder.RegisterType<TypesRepository>().As<ITypesRepository>();
-        builder.RegisterType<CategoriesRepository>().As<IRepository<Category>>();
+        builder.RegisterType<CategoriesRepository>().As<ICategoriesRepository>();
       }
     }
   }

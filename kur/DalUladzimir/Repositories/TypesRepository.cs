@@ -9,11 +9,6 @@ namespace DalUladzimir.Repositories
 {
   public class TypesRepository : ITypesRepository
   {
-    public IEnumerable<ProductType> GetAll()
-    {
-      throw new NotImplementedException();
-    }
-
     public IEnumerable<ProductType> GetTypesByCategory(int categoryId)
     {
       var types = new List<ProductType>();
@@ -46,9 +41,12 @@ namespace DalUladzimir.Repositories
       return types;
     }
 
+    public int Create(ProductCreate model)
+    {
+      throw new NotImplementedException();
+    }
 
-
-    ProductType IRepository<ProductType>.GetById(int id)
+    public ProductType GetById(int id)
     {
       throw new NotImplementedException();
     }

@@ -18,7 +18,7 @@ namespace Interfaces.Entities
         public int? Count { get; set; }
         public string StorageSerial { get; set; }//???
         public List<string> Attributes { get; set; }
-        public ProductTypeFields ProductType { get; set; }
+        public ProductTypeCreate ProductType { get; set; }
 
         public ProductCreate()
         {

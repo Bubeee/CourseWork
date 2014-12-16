@@ -6,19 +6,24 @@ namespace WebUI.Controllers
 {
   public class ProductsController : Controller
   {
-    private readonly IRepository<Product> _repo;
+    private readonly IProductRepository _repo;
 
-    public ProductsController(IRepository<Product> repo)
+    public ProductsController(IProductRepository repo)
     {
       _repo = repo;
     }
 
     // GET: Products
-    public ActionResult Index()
+    public ActionResult Index(int? typeId)
     {
-      var product = _repo.GetById(1);
+      if (typeId.HasValue)
+      {
+        var products = _repo.GetProductsByType(typeId.Value);
 
-      return View(product);
+        return View(products); 
+      }
+
+      return new EmptyResult();
     }
 
     public ActionResult AddProduct()

@@ -6,17 +6,17 @@ namespace Interfaces.Entities
   public class Product : IEntity
   {
     public int Id { get; set; }
-    public string Model { get; set; }
-    public int ManufacturerId { get; set; }
+    public string Name { get; set; }
     public string Manufacturer { get; set; }
+    public string ManufacturerInfo { get; set; }
     public int Price { get; set; }
-    public int Warranty { get; set; }
-    public int DeliveryId { get; set; }
+    public string Warranty { get; set; }
     public string Delivery { get; set; }
     public string Picture { get; set; }
-    public int Count { get; set; }
+    public int? Count { get; set; }
+    public string StorageSerial { get; set; }
     public List<string> Attributes { get; set; }
-    public ProductType productType { get; set; }//!!! How rename?
+    public ProductType ProductType { get; set; }//!!! How rename?
 
     public Product()
     {
@@ -24,7 +24,7 @@ namespace Interfaces.Entities
     }
     public override string ToString()
     {
-      return Id + " " + Model + " " + Price + " " + Warranty + " " + DeliveryId + " " + Picture + " " + Count;
+      return Id + " " + Name + " " + Price + " " + Warranty + " " + " " + Picture + " " + Count;
     }
   }
 }

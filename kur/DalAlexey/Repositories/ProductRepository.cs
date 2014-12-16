@@ -31,12 +31,10 @@ namespace DalAlexey.Repositories
                   dataTable.Load(command.ExecuteReader());
 
                   product.Id = dataTable.Rows[0].Field<int>("id");
-                  product.Model = dataTable.Rows[0].Field<string>("model");
-                  product.ManufacturerId = dataTable.Rows[0].Field<int>("manufacturer_id");
+                  product.Name = dataTable.Rows[0].Field<string>("model");
                   product.Manufacturer = dataTable.Rows[0].Field<string>("manufacturer");
                   product.Price = dataTable.Rows[0].Field<int>("price");
-                  product.Warranty = dataTable.Rows[0].Field<int>("warranty");
-                  product.DeliveryId = dataTable.Rows[0].Field<int>("delivery_id");
+                  product.Warranty = dataTable.Rows[0].Field<string>("warranty");
                   product.Delivery = dataTable.Rows[0].Field<string>("delivery");
                   product.Picture = dataTable.Rows[0].Field<string>("picture");
                   product.Count = dataTable.Rows[0].Field<int>("count");

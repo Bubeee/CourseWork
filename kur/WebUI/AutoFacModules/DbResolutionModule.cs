@@ -18,11 +18,10 @@ namespace WebUI.AutoFacModules
       }
       else
       {
-        builder.RegisterType<ProductRepository>().As<IRepository<Product>>();
-        builder.RegisterType<TypesRepository>().As<IRepository<ProductType>>();
+        builder.RegisterType<ProductsRepository>().As<IProductRepository>();
+        builder.RegisterType<TypesRepository>().As<ITypesRepository>();
         builder.RegisterType<CategoriesRepository>().As<IRepository<Category>>();
       }
-      base.Load(builder);
     }
   }
 }

@@ -172,3 +172,5 @@ D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Autofac.dll
 D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\DalUladzimir.dll
 D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\DalUladzimir.pdb
 D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Autofac.xml
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Autofac.Integration.Mvc.dll
+D:\7 сем\Курсач\CourseWork\kur\WebUI\bin\Autofac.Integration.Mvc.xml

@@ -26,9 +26,9 @@ namespace DalUladzimir.Repositories
         {
           while (reader.Read())
           {
-            category.Id = (int) reader[0];
-            category.Name = (string) reader[1];
-            category.Image = (string) reader[2];
+            category.Id = (int)reader[0];
+            category.Name = (string)reader[1];
+            category.Image = (string)reader[2];
           }
         }
       }
@@ -54,9 +54,9 @@ namespace DalUladzimir.Repositories
           {
             var category = new Category
             {
-              Id = (int) reader[0], 
-              Name = (string) reader[1], 
-              Image = (string) reader[2]
+              Id = (int)reader[0],
+              Name = (string)reader[1],
+              Image = (string)reader[2]
             };
 
             categories.Add(category);
@@ -69,7 +69,24 @@ namespace DalUladzimir.Repositories
 
     public int Create(Category model)
     {
-      throw new System.NotImplementedException();
+      int newId;
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "INSERT INTO [dbo].[Categories] ([Name], [Picture]) " +
+                  "VALUES (@Name, @Image); " +
+                  "SELECT CAST(scope_identity() AS int)";
+
+      using (var connection = new SqlConnection(conString))
+      {
+        using (var command = new SqlCommand(query, connection))
+        {
+          command.Parameters.Add(new SqlParameter("@Name", model.Name));
+          command.Parameters.Add(new SqlParameter("@Image", model.Image));
+          connection.Open();
+          newId = (int)command.ExecuteScalar();
+        }
+      }
+
+      return newId;
     }
   }
 }

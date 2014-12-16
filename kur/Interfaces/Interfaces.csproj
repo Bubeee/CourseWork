@@ -43,7 +43,6 @@
     <Compile Include="Entities\Product.cs" />
     <Compile Include="Entities\ProductType.cs" />
     <Compile Include="Entities\ProductTypeCreate.cs" />
-    <Compile Include="Entities\ProductTypeFields.cs" />
     <Compile Include="Interfaces\IEntity.cs" />
     <Compile Include="Interfaces\IProductRepository.cs" />
     <Compile Include="Interfaces\IRepository.cs" />

@@ -64,7 +64,7 @@ namespace DalUladzimir.Repositories
               Warranty = (string)reader[3],
               Picture = (string)reader[4],
               Count = (int?)reader[5],
-              ProductType = new ProductType()
+              ProductType = new ProductType
               {
                 Id = (int)reader[6],
                 Name = (string)reader[7]

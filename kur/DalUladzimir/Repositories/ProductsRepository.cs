@@ -102,5 +102,15 @@ namespace DalUladzimir.Repositories
 
       return products;
     }
+
+    public void AddManufacturer(string manufacturerName, string manufacturerInfo)
+    {
+      throw new NotImplementedException();
+    }
+
+    public void AddDelivery(string delivery)
+    {
+      throw new NotImplementedException();
+    }
   }
 }

@@ -6,5 +6,8 @@ namespace Interfaces.Interfaces
   public interface IProductRepository : IRepository<ProductCreate, Product>
   {
     IEnumerable<Product> GetProductsByType(int typeId);
+
+    void AddManufacturer(string manufacturerName, string manufacturerInfo);
+    void AddDelivery(string delivery);
   }
 }

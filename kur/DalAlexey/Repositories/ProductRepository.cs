@@ -81,5 +81,16 @@ namespace DalAlexey.Repositories
     {
       throw new System.NotImplementedException();
     }
+
+
+    public void AddManufacturer(string manufacturerName, string manufacturerInfo)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public void AddDelivery(string delivery)
+    {
+      throw new System.NotImplementedException();
+    }
   }
 }

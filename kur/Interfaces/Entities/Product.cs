@@ -16,7 +16,7 @@ namespace Interfaces.Entities
     public int? Count { get; set; }
     public string StorageSerial { get; set; }
     public List<string> Attributes { get; set; }
-    public ProductType ProductType { get; set; }//!!! How rename?
+    public ProductType ProductType { get; set; }
 
     public Product()
     {

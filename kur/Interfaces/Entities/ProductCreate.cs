@@ -15,7 +15,7 @@ namespace Interfaces.Entities
     public string Warranty { get; set; }
     public int DeliveryId { get; set; }
     public string Picture { get; set; }
-    public int? Count { get; set; }
+    public int Count { get; set; }
     public int TypeId { get; set; }
     public string StorageSerial { get; set; }//???
     public List<string> Attributes { get; set; }

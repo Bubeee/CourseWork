@@ -76,12 +76,7 @@ namespace DalAlexey.Repositories
     {
       throw new System.NotImplementedException();
     }
-
-    public IEnumerable<Product> GetAll()
-    {
-      throw new System.NotImplementedException();
-    }
-
+    
 
     public void AddManufacturer(string manufacturerName, string manufacturerInfo)
     {
@@ -94,16 +89,6 @@ namespace DalAlexey.Repositories
     }
 
     public Dictionary<int, string> GetManuf()
-    {
-      throw new System.NotImplementedException();
-    }
-
-    public List<string> GetAttributes(int typeId)
-    {
-      throw new System.NotImplementedException();
-    }
-
-    public List<int> GetAttributeIds(int typeId)
     {
       throw new System.NotImplementedException();
     }

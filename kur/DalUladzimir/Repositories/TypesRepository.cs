@@ -41,6 +41,11 @@ namespace DalUladzimir.Repositories
       return types;
     }
 
+    public ProductTypeCreate GetProductTypeCreateById(int typeId)
+    {
+
+    }
+
     public int Create(ProductTypeCreate model)
     {
       int newProdId;

@@ -11,7 +11,5 @@ namespace Interfaces.Interfaces
     void AddDelivery(string delivery);
 
     Dictionary<int, string> GetManuf();
-    List<ProductTypeField> GetAttributes(int typeId);
-    List<int> GetAttributeIds(int typeId);
   }
 }

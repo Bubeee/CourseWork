@@ -7,6 +7,6 @@ namespace Interfaces.Interfaces
   {
     IEnumerable<ProductType> GetTypesByCategory(int categoryId);
 
-    ProductTypeCreate GetPrTypeById(int typeId);
+    ProductTypeCreate GetProductTypeCreateById(int typeId);
   }
 }

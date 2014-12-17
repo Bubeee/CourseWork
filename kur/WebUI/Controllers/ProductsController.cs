@@ -35,7 +35,7 @@ namespace WebUI.Controllers
       var newProd = new ProductCreate { Manufacturers = new SelectList(_repo.GetManuf(), "Key", "Value") };
       if (typeId != 0)
       {
-        var type = _typesRepository.GetPrTypeById(typeId);
+        var type = _typesRepository.GetProductTypeCreateById(typeId);
         newProd.ProductType.AttributeDescriptions = _repo.GetAttributes(typeId);
       }
 

@@ -96,7 +96,6 @@ namespace DalAlexey.Repositories
                 }
             }
         }
-
         private string CreateProductTypeTableQuery(List<ProductTypeField> attributes)
         {
             var sb = new StringBuilder();

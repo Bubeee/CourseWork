@@ -43,7 +43,7 @@ namespace DalUladzimir.Repositories
 
     public int Create(ProductTypeCreate model)
     {
-      int typeId;
+      int newProdId;
 
       var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
       var query = "INSERT INTO [dbo].[Types] ([Name], [CategoryId]) " +
@@ -56,14 +56,11 @@ namespace DalUladzimir.Repositories
           command.Parameters.Add(new SqlParameter("@categoryId", model.CategoryId));
           command.Parameters.Add(new SqlParameter("@typeName", model.TypeName));
           connection.Open();
-          newId = (int)command.ExecuteScalar();
+          newProdId = (int)command.ExecuteScalar();
         }
-
-
-
       }
 
-      return type;
+      return newProdId;
     }
 
     public ProductType GetById(int id)

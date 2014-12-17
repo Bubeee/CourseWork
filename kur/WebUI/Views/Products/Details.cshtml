@@ -1,0 +1,93 @@
+﻿@model Interfaces.Entities.Product
+
+@{
+  ViewBag.Title = "Details";
+}
+
+
+<div>
+  <h1>
+    @Html.DisplayFor(model => model.Name)
+  </h1>
+
+  <div style="display: -webkit-inline-box;">
+    <dl class="dl-horizontal">  
+      <dt>
+        @Html.DisplayNameFor(model => model.Manufacturer)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.Manufacturer)
+      </dd>
+
+      <dt>
+
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.ManufacturerInfo)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.Price)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.Price)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.Warranty)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.Warranty)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.Delivery)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.Delivery)
+      </dd>
+
+      <dt>
+      </dt>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.Count)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.Count)
+      </dd>
+
+      <dt>
+        @Html.DisplayNameFor(model => model.StorageSerial)
+      </dt>
+
+      <dd>
+        @Html.DisplayFor(model => model.StorageSerial)
+      </dd>
+
+    </dl>
+  </div>
+  <div style="display: -webkit-inline-box; margin-left: 110px">
+    <img src="~/@Url.Content(Model.Picture)" alt="Image not provided" width="500" height="500" />
+    <div>
+      @foreach (var atr in Model.Attributes)
+      {
+        <ul>
+          <li>@Html.Label(atr)</li>
+        </ul>
+      }
+    </div>
+  </div>
+
+</div>
+
+<p>
+  @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+  @Html.ActionLink("Back to List", "Index")
+</p>

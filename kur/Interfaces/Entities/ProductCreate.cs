@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 
 namespace Interfaces.Entities
 {
@@ -11,6 +12,7 @@ namespace Interfaces.Entities
     public int Id { get; set; }
     public string Name { get; set; }
     public int ManufacturerId { get; set; }
+    public SelectList Manufacturers { get; set; }
     public int Price { get; set; }
     public string Warranty { get; set; }
     public int DeliveryId { get; set; }

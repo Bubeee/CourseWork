@@ -92,5 +92,10 @@ namespace DalAlexey.Repositories
     {
       throw new System.NotImplementedException();
     }
+
+    public Dictionary<int, string> GetManuf()
+    {
+      throw new System.NotImplementedException();
+    }
   }
 }

@@ -9,5 +9,7 @@ namespace Interfaces.Interfaces
 
     void AddManufacturer(string manufacturerName, string manufacturerInfo);
     void AddDelivery(string delivery);
+
+    Dictionary<int, string> GetManuf();
   }
 }

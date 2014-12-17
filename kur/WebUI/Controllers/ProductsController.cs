@@ -14,13 +14,13 @@ namespace WebUI.Controllers
     }
 
     // GET: Products
-    public ActionResult Index(int? typeId)
+    public ActionResult Index(int? typeId, string typeName)
     {
       if (typeId.HasValue)
       {
         var products = _repo.GetProductsByType(typeId.Value);
-
-        return View(products); 
+        ViewBag.Type = typeName;
+        return View(products);
       }
 
       return new EmptyResult();
@@ -28,12 +28,15 @@ namespace WebUI.Controllers
 
     public ActionResult AddProduct()
     {
-      return View();
+      var newProd = new ProductCreate { Manufacturers = new SelectList(_repo.GetManuf(), "Key", "Value") };
+
+      return View(newProd);
     }
 
     [HttpPost]
-    public ActionResult AddProduct(Product newProduct)
+    public ActionResult AddProduct(ProductCreate newProduct)
     {
+      _repo.Create(newProduct);
       return View();
     }
 
@@ -41,5 +44,10 @@ namespace WebUI.Controllers
     //{
 
     //}
+
+    public ActionResult Details(int id)
+    {
+      return View(_repo.GetById(id));
+    }
   }
 }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<Interfaces.Entities.ProductType>
 
 @{
-  ViewBag.Title = "Index";
+  ViewBag.Title = "Types of ";
 }
 
 <h2>Index</h2>
@@ -23,7 +23,7 @@
   {
     <tr>
       <td>
-        @Html.ActionLink(item.Name, "Index", "Products", new { typeId = item.Id }, null)
+        @Html.ActionLink(item.Name, "Index", "Products", new { typeId = item.Id, typeName = item.Name }, null)
       </td>
       <td></td>
       <td>

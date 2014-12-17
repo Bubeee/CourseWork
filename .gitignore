@@ -42,3 +42,8 @@ obj
 kur/kur.v12.suo
 *.pdb
 *.suo
+kur/WebUI/bin/WebUI.dll
+kur/WebUI/bin/WebUI.dll
+kur/WebUI/bin/WebUI.pdb
+kur/WebUI/obj/Debug/WebUI.csprojResolveAssemblyReference.cache
+kur/WebUI/obj/Debug/WebUI.pdb

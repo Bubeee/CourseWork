@@ -87,7 +87,28 @@ namespace DalUladzimir.Repositories
 
     public int Create(ProductCreate model)
     {
-      throw new NotImplementedException();
+      var attributeDescriptions = new List<int>();
+
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "SELECT [AttributeDescriptionId] " +
+                  "FROM [kur_Vova].[dbo].[AttributeDescription] " +
+                  "WHERE [TypeId] = @typeId";
+
+      using (var connection = new SqlConnection(conString))
+      {
+        var command = new SqlCommand(query, connection);
+        command.Parameters.Add(new SqlParameter("@typeId", typeId));
+        connection.Open();
+        using (var reader = command.ExecuteReader())
+        {
+          while (reader.Read())
+          {
+            attributeDescriptions.Add((int)reader[0]);
+          }
+        }
+      }
+
+      return attributeDescriptions;
     }
 
     public IEnumerable<Product> GetProductsByType(int typeId)
@@ -206,6 +227,58 @@ namespace DalUladzimir.Repositories
       }
 
       return manufacturers;
+    }
+
+    public List<string> GetAttributes(int typeId)
+    {
+      var attributeDescriptions = new List<string>();
+
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "SELECT [Name] " +
+                  "FROM [kur_Vova].[dbo].[AttributeDescription] " +
+                  "WHERE [TypeId] = @typeId";
+
+      using (var connection = new SqlConnection(conString)) 
+      {
+        var command = new SqlCommand(query, connection);
+        command.Parameters.Add(new SqlParameter("@typeId", typeId));
+        connection.Open();
+        using (var reader = command.ExecuteReader())
+        {
+          while (reader.Read())
+          {
+            attributeDescriptions.Add((string)reader[0]);
+          }
+        }
+      }
+
+      return attributeDescriptions;
+    } 
+    
+    public List<int> GetAttributeIds(int typeId)
+    {
+      var attributeDescriptions = new List<int>();
+
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "SELECT [AttributeDescriptionId] " +
+                  "FROM [kur_Vova].[dbo].[AttributeDescription] " +
+                  "WHERE [TypeId] = @typeId";
+
+      using (var connection = new SqlConnection(conString))
+      {
+        var command = new SqlCommand(query, connection);
+        command.Parameters.Add(new SqlParameter("@typeId", typeId));
+        connection.Open();
+        using (var reader = command.ExecuteReader())
+        {
+          while (reader.Read())
+          {
+            attributeDescriptions.Add((int)reader[0]);
+          }
+        }
+      }
+
+      return attributeDescriptions;
     }
   }
 }

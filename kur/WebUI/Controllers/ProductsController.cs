@@ -13,7 +13,6 @@ namespace WebUI.Controllers
       _repo = repo;
     }
 
-    // GET: Products
     public ActionResult Index(int? typeId, string typeName)
     {
       if (typeId.HasValue)
@@ -26,9 +25,18 @@ namespace WebUI.Controllers
       return new EmptyResult();
     }
 
-    public ActionResult AddProduct()
+    public ActionResult AddProduct(int typeId)
     {
       var newProd = new ProductCreate { Manufacturers = new SelectList(_repo.GetManuf(), "Key", "Value") };
+      if (typeId != 0)
+      {
+        foreach (var item in _repo.GetAttributes(typeId))
+        {
+          newProd.Attributes.Add(item, string.Empty);
+        }
+
+        newProd.AttributesDescriptionIds = _repo.GetAttributeIds(typeId);
+      }
 
       return View(newProd);
     }
@@ -39,11 +47,6 @@ namespace WebUI.Controllers
       _repo.Create(newProduct);
       return View();
     }
-
-    //public ActionResult SearchProducts()
-    //{
-
-    //}
 
     public ActionResult Details(int id)
     {

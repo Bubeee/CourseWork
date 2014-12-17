@@ -97,5 +97,15 @@ namespace DalAlexey.Repositories
     {
       throw new System.NotImplementedException();
     }
+
+    public List<string> GetAttributes(int typeId)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public List<int> GetAttributeIds(int typeId)
+    {
+      throw new System.NotImplementedException();
+    }
   }
 }

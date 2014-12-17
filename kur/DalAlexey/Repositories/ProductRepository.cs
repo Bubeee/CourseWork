@@ -85,12 +85,39 @@ namespace DalAlexey.Repositories
 
     public void AddManufacturer(string manufacturerName, string manufacturerInfo)
     {
-      throw new System.NotImplementedException();
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            connection.ChangeDatabase(workDatabaseName);
+
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                //создание производителя
+                command.CommandText = "INSERT INTO [manufacturer] ([name],[info]) VALUES (@manufacturerName,@manufacturerInfo)";
+                command.Parameters.Add(new SqlParameter("@manufacturerName", manufacturerName));
+                command.Parameters.Add(new SqlParameter("@manufacturerInfo", manufacturerInfo));
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 
     public void AddDelivery(string delivery)
     {
-      throw new System.NotImplementedException();
+        using (SqlConnection connection = new SqlConnection(connectionString))
+        {
+            connection.Open();
+            connection.ChangeDatabase(workDatabaseName);
+
+            using (SqlCommand command = new SqlCommand("", connection))
+            {
+                //создание производителя
+                command.CommandText = "INSERT INTO [delivery] ([name]) VALUES (@delivery)";
+                command.Parameters.Add(new SqlParameter("@delivery", delivery));
+
+                command.ExecuteNonQuery();
+            }
+        }
     }
 
     public Dictionary<int, string> GetManuf()

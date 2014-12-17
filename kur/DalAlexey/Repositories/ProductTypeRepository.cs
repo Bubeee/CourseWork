@@ -41,6 +41,33 @@ namespace DalAlexey.Repositories
             }
             return productType;
         }
+        public ProductType GetProductTypeCreate(int id)
+        {
+            var productType = new ProductType();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                connection.ChangeDatabase(workDatabaseName);
+
+                DataTable dataTable = new DataTable();
+
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT [view_name] FROM [field] WHERE [type_product_id] = (@producttypeid) ORDER BY [id]";
+                    command.Parameters.Add(new SqlParameter("@producttypeid", id));
+
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            productType.AttributeNames.Add(reader.GetString(0));
+                        }
+                    }
+                }
+            }
+            return productType;
+        }
         public void CreateProductType(ProductTypeCreate productTypeCreate)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))

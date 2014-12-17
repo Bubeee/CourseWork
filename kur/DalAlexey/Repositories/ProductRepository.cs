@@ -4,6 +4,8 @@ using System.Data;
 using System.Data.SqlClient;
 using Interfaces.Entities;
 using Interfaces.Interfaces;
+using System;
+using System.Text;
 
 namespace DalAlexey.Repositories
 {
@@ -69,7 +71,95 @@ namespace DalAlexey.Repositories
 
         public int Create(ProductCreate model)
         {
-            throw new System.NotImplementedException();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                SqlTransaction trans = connection.BeginTransaction();
+
+                try
+                {
+                    connection.Open();
+                    connection.ChangeDatabase(workDatabaseName);
+
+                    DataTable dataTable = new DataTable();
+                    using (SqlCommand command = new SqlCommand("", connection, trans))
+                    {
+                        trans = connection.BeginTransaction();
+                        {
+                            command.Transaction = trans;
+                            command.CommandText = "INSERT INTO [product]" +
+                                                        "([type_id],[model],[manufacturer_id],[price],[warranty]," +
+                                                            "[delivery_id],[picture],[count])" +
+                                                        "VALUES" +
+                                                        "(@typeId,@model,@manufacturerId,@price,@warranty,@deliveryId,@picture,@count)";
+                            command.Parameters.Add(new SqlParameter("@typeId", model.TypeId));
+                            command.Parameters.Add(new SqlParameter("@model", model.Name));
+                            command.Parameters.Add(new SqlParameter("@manufacturerId", model.ManufacturerId));
+                            command.Parameters.Add(new SqlParameter("@price", model.Price));
+                            command.Parameters.Add(new SqlParameter("@warranty", model.Warranty));
+                            command.Parameters.Add(new SqlParameter("@deliveryId", model.DeliveryId));
+                            command.Parameters.Add(new SqlParameter("@picture", model.Picture));
+                            //TODO Make count other
+                            command.Parameters.Add(new SqlParameter("@count", model.Count));
+
+                            int productId = (int)command.ExecuteNonQuery();
+
+                            model.Id = productId;
+
+                            //вставка в таблицу типа товара
+                            command.CommandText = "INSERT INTO [type_product" + model.TypeId + "]" +
+                                                    "(" +
+                                                        "product_id," +
+                                                        CreateProductColumnsQuery(model.Attributes.Count) +
+                                                    ")" +
+                                                    "VALUES" +
+                                                    "(" +
+                                                    "@productId" +
+                                                    "," +
+                                                    CreateProductAttributesQuery(model.Attributes) +
+                                                    ")";
+                            command.Parameters.Clear();
+                            command.Parameters.Add(new SqlParameter("@productId", model.TypeId));
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (trans != null) trans.Rollback();
+                    //throw;
+                    return -1;
+                }
+            }
+            return 1;
+        }
+
+        private string CreateProductColumnsQuery(int countColumns)
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < countColumns; i++)
+            {
+                sb.Append("col");
+                sb.Append(i.ToString());
+                if (i < (countColumns - 1))
+                {
+                    sb.Append(",");
+                }
+            }
+            return sb.ToString();
+        }
+        private string CreateProductAttributesQuery(List<string> attributes)
+        {
+            var sb = new StringBuilder();
+            for (int i = 0; i < attributes.Count; i++)
+            {
+                sb.Append("col");
+                sb.Append(i.ToString());
+                if (i < (attributes.Count - 1))
+                {
+                    sb.Append(",");
+                }
+            }
+            return sb.ToString();
         }
 
         public IEnumerable<Product> GetProductsByType(int typeId)

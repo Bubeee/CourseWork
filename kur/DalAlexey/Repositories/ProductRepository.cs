@@ -239,5 +239,15 @@ namespace DalAlexey.Repositories
         {
             throw new System.NotImplementedException();
         }
+
+      public Dictionary<int, string> GetDeliveries()
+      {
+        throw new NotImplementedException();
+      }
+
+      public Dictionary<int, string> GetStorages()
+      {
+        throw new NotImplementedException();
+      }
     }
 }

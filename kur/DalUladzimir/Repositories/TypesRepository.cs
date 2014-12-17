@@ -52,8 +52,8 @@ namespace DalUladzimir.Repositories
                   "WHERE [Id] = @typeId";
 
       var query2 = "SELECT [Name], [Id] " +
-                  "FROM [dbo].[Types]" +
-                  "WHERE [TypeId] = @typeId";
+                   "FROM [dbo].[AttributeDescription]" +
+                   "WHERE [TypeId] = @typeId";
 
       using (var connection = new SqlConnection(conString))
       {
@@ -70,7 +70,7 @@ namespace DalUladzimir.Repositories
         }
 
         command = new SqlCommand(query2, connection);
-        //command.Parameters.Add(new SqlParameter("@typeId", typeId));
+        command.Parameters.Add(new SqlParameter("@typeId", typeId));
         using (var reader = command.ExecuteReader())
         {
           while (reader.Read())

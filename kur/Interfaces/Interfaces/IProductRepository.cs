@@ -11,5 +11,7 @@ namespace Interfaces.Interfaces
     void AddDelivery(string delivery);
 
     Dictionary<int, string> GetManuf();
+    Dictionary<int, string> GetDeliveries();
+    Dictionary<int, string> GetStorages();
   }
 }

@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Collections.Generic;
+using System.Web.Mvc;
 using Interfaces.Entities;
 using Interfaces.Interfaces;
 
@@ -32,10 +33,18 @@ namespace WebUI.Controllers
 
     public ActionResult AddProduct(int typeId)
     {
-      var newProd = new ProductCreate { Manufacturers = new SelectList(_repo.GetManuf(), "Key", "Value") };
+      var newProd = new ProductCreate
+      {
+        Manufacturers = new SelectList(_repo.GetManuf(), "Key", "Value"),
+        Deliveries = new SelectList(_repo.GetDeliveries(), "Key", "Value")
+      };
       if (typeId != 0)
       {
         newProd.ProductType = _typesRepository.GetProductTypeCreateById(typeId);
+        foreach (var item in newProd.ProductType.AttributeDescriptions)
+        {
+          newProd.Attributes.Add(string.Empty);
+        }
       }
 
       return View(newProd);

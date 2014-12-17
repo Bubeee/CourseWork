@@ -65,10 +65,10 @@ namespace DalUladzimir.Repositories
         }
 
         var attriQuery = "SELECT [AD].[Name], [A].[Value] " +
-                        "FROM [kur_Vova].[dbo].[Attribute] AS [A] " +
-                        "INNER JOIN [kur_Vova].[dbo].[AttributeDescription] AS [AD] " +
-                        "ON [A].[AttributeDescriptionId] = [AD].[Id] " +
-                        "WHERE [A].[ProductId] = @productId";
+                         "FROM [kur_Vova].[dbo].[Attribute] AS [A] " +
+                         "INNER JOIN [kur_Vova].[dbo].[AttributeDescription] AS [AD] " +
+                         "ON [A].[AttributeDescriptionId] = [AD].[Id] " +
+                         "WHERE [A].[ProductId] = @productId";
 
         command = new SqlCommand(attriQuery, connection);
         command.Parameters.Add(new SqlParameter("@productId", product.Id));
@@ -87,30 +87,54 @@ namespace DalUladzimir.Repositories
 
     public int Create(ProductCreate model)
     {
-      //var attributeDescriptions = new List<int>();
+      int newId;
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "INSERT INTO [dbo].[Products] " +
+                  "([Name], " +
+                  "[Price], " +
+                  "[Warranty], " +
+                  "[Picture], " +
+                  "[Count], " +
+                  "[TypeId], " +
+                  "[DeliveryId], " +
+                  "[ManufacturerId], " +
+                  "[StorageId]) " +
+                  "VALUES (@name, @price, @warranty, @pic, @count, @typeId, @deliveryId, @manId, @storId);";
 
-      //var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
-      //var query = "SELECT [AttributeDescriptionId] " +
-      //            "FROM [kur_Vova].[dbo].[AttributeDescription] " +
-      //            "WHERE [TypeId] = @typeId";
+      var query2 = "INSERT INTO [dbo].[Attribute] (ProductId, AttributeDescriptionId, Value)" +
+                   "VALUES (@prodId, @attributeDescrId, @value)";
 
-      //using (var connection = new SqlConnection(conString))
-      //{
-      //  var command = new SqlCommand(query, connection);
-      //  command.Parameters.Add(new SqlParameter("@typeId", typeId));
-      //  connection.Open();
-      //  using (var reader = command.ExecuteReader())
-      //  {
-      //    while (reader.Read())
-      //    {
-      //      attributeDescriptions.Add((int)reader[0]);
-      //    }
-      //  }
-      //}
+      using (var connection = new SqlConnection(conString))
+      {
+        using (var command = new SqlCommand(query, connection))
+        {
+          command.Parameters.Add(new SqlParameter("@name", model.Name));
+          command.Parameters.Add(new SqlParameter("@price", model.Price));
+          command.Parameters.Add(new SqlParameter("@warranty", model.Warranty));
+          command.Parameters.Add(new SqlParameter("@pic", model.Picture));
+          command.Parameters.Add(new SqlParameter("@count", model.Count));
+          command.Parameters.Add(new SqlParameter("@typeId", model.TypeId));
+          command.Parameters.Add(new SqlParameter("@deliveryId", model.DeliveryId));
+          command.Parameters.Add(new SqlParameter("@manId", model.ManufacturerId));
+          command.Parameters.Add(new SqlParameter("@storId", null));
+          connection.Open();
+          newId = (int)command.ExecuteScalar();
+        }
 
-      //return attributeDescriptions;
+        using (var command = new SqlCommand(query2, connection))
+        {
+          for (int i = 0; i < model.ProductType.AttributeDescriptions.Count; i++)
+          {
+            command.Parameters.Add(new SqlParameter("@prodId", newId));
+            command.Parameters.Add(new SqlParameter("@attributeDescrId", model.ProductType.AttributeDescriptions[i].Id));
+            command.Parameters.Add(new SqlParameter("@value", model.Attributes[i]));
+            connection.Open();
+            command.ExecuteScalar();
+          }
+        }
+      }
 
-      throw new NotImplementedException();
+      return newId;
     }
 
     public IEnumerable<Product> GetProductsByType(int typeId)
@@ -229,6 +253,54 @@ namespace DalUladzimir.Repositories
       }
 
       return manufacturers;
+    }
+
+    public Dictionary<int, string> GetDeliveries()
+    {
+      var deliveries = new Dictionary<int, string>();
+
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "SELECT [Id], [Name]" +
+                  "FROM [kur_Vova].[dbo].[Delivery]";
+
+      using (var connection = new SqlConnection(conString))
+      {
+        var command = new SqlCommand(query, connection);
+        connection.Open();
+        using (var reader = command.ExecuteReader())
+        {
+          while (reader.Read())
+          {
+            deliveries.Add((int)reader[0], (string)reader[1]);
+          }
+        }
+      }
+
+      return deliveries;
+    }
+
+    public Dictionary<int, string> GetStorages()
+    {
+      var storages = new Dictionary<int, string>();
+
+      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      var query = "SELECT [Id], [Serial] " +
+                  "FROM [kur_Vova].[dbo].[Storage]";
+
+      using (var connection = new SqlConnection(conString))
+      {
+        var command = new SqlCommand(query, connection);
+        connection.Open();
+        using (var reader = command.ExecuteReader())
+        {
+          while (reader.Read())
+          {
+            storages.Add((int)reader[0], (string)reader[1]);
+          }
+        }
+      }
+
+      return storages;
     }
   }
 }

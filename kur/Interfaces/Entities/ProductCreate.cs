@@ -16,6 +16,7 @@ namespace Interfaces.Entities
     public int Price { get; set; }
     public string Warranty { get; set; }
     public int DeliveryId { get; set; }
+    public SelectList Deliveries { get; set; }
     public string Picture { get; set; }
     public int Count { get; set; }
     public int TypeId { get; set; }

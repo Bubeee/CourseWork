@@ -2,7 +2,6 @@
 using System.Web.Mvc;
 using Interfaces.Entities;
 using Interfaces.Interfaces;
-using Newtonsoft.Json.Serialization;
 
 namespace WebUI.Controllers
 {

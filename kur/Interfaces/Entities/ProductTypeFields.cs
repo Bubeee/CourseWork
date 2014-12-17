@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Interfaces.Interfaces;
+﻿using Interfaces.Interfaces;
 
 namespace Interfaces.Entities
 {
@@ -7,7 +6,5 @@ namespace Interfaces.Entities
   {
     public string AttributeName { get; set; }
     public short AttributeType { get; set; }
-    public List<string> EnumValues { get; set; }
-    public int Id { get; set; }
   }
 }

@@ -72,11 +72,11 @@
     <div class="form-group">
       <h2>Attributes</h2>
 
-      @foreach (var kvp in Model.ProductType.AttributeDescriptions)
+      @foreach (var kvp in Model.Attributes)
       {
         <div class="col-md-10">
-          @Html.Label(@kvp.AttributeName, htmlAttributes: new { @class = "control-label col-md-2" })
-          @Html.TextBoxFor(create => create.Attributes, new { @class = "text-danger" })
+          @Html.Label(@kvp.Key, htmlAttributes: new { @class = "control-label col-md-2" })
+          @Html.TextBoxFor(create => create.Attributes[@kvp.Key], new { @class = "text-danger" })
         </div>
       }
     </div>

@@ -43,49 +43,7 @@ namespace DalUladzimir.Repositories
 
     public ProductTypeCreate GetProductTypeCreateById(int typeId)
     {
-      var productTypeCreate = new ProductTypeCreate();
-      productTypeCreate.AttributeDescriptions = new List<ProductTypeField>();
 
-      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
-      var query = "SELECT [Name], [CategoryId] " +
-                  "FROM [dbo].[Types]" +
-                  "WHERE [Id] = @typeId";
-
-      var query2 = "SELECT [Name], [Id] " +
-                  "FROM [dbo].[Types]" +
-                  "WHERE [TypeId] = @typeId";
-
-      using (var connection = new SqlConnection(conString))
-      {
-        var command = new SqlCommand(query, connection);
-        command.Parameters.Add(new SqlParameter("@typeId", typeId));
-        connection.Open();
-        using (var reader = command.ExecuteReader())
-        {
-          while (reader.Read())
-          {
-            productTypeCreate.TypeName = (string)reader[0];
-            productTypeCreate.CategoryId = (int)reader[1];
-          }
-        }
-
-        command = new SqlCommand(query2, connection);
-        //command.Parameters.Add(new SqlParameter("@typeId", typeId));
-        using (var reader = command.ExecuteReader())
-        {
-          while (reader.Read())
-          {
-            productTypeCreate.AttributeDescriptions.Add(
-              new ProductTypeField
-            {
-              AttributeName = (string)reader[0],
-              Id = (int)reader[1]
-            });
-          }
-        }
-      }
-
-      return productTypeCreate;
     }
 
     public int Create(ProductTypeCreate model)

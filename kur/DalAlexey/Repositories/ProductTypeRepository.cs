@@ -72,7 +72,7 @@ namespace DalAlexey.Repositories
                         command.CommandText = "CREATE TABLE [type_product" + productTypeId + "]" +
                                                 "(" +
                                                     "product_id int," +
-                                                    CreateProductTypeTableQuery(productTypeCreate.Attributes) +
+                                                    CreateProductTypeTableQuery(productTypeCreate.AttributeDescriptions) +
                                                 ")";
                         command.Parameters[0].ParameterName = "@productTypeId";
                         command.Parameters[0].Value = productTypeId;
@@ -81,7 +81,7 @@ namespace DalAlexey.Repositories
 
                         command.CommandText = "INSERT INTO [field] ([type_product_id],[view_name],[field_type]) VALUES " +
                                                 "(" +
-                                                    CreateProductTypeFieldsQuery(productTypeId, productTypeCreate.Attributes) +
+                                                    CreateProductTypeFieldsQuery(productTypeId, productTypeCreate.AttributeDescriptions) +
                                                 ")";
                         command.Parameters.RemoveAt(0);
                         command.ExecuteNonQuery();
@@ -97,7 +97,7 @@ namespace DalAlexey.Repositories
             }
         }
 
-        private string CreateProductTypeTableQuery(List<ProductTypeFields> attributes)
+        private string CreateProductTypeTableQuery(List<ProductTypeField> attributes)
         {
             var sb = new StringBuilder();
             for (int i = 0; i < attributes.Count; i++)
@@ -130,7 +130,7 @@ namespace DalAlexey.Repositories
             }
             return sb.ToString();
         }
-        private string CreateProductTypeFieldsQuery(int productTypeId, List<ProductTypeFields> attributes)
+        private string CreateProductTypeFieldsQuery(int productTypeId, List<ProductTypeField> attributes)
         {
             //INSERT INTO [field] 
             //([type_product_id],[view_name],[field_type])
@@ -143,7 +143,7 @@ namespace DalAlexey.Repositories
                 sb.Append("(");
                 sb.Append(productTypeId);
                 sb.Append(",N'");
-                sb.Append(attributes[i].Name);
+                sb.Append(attributes[i].AttributeName);
                 sb.Append("',");
                 sb.Append(attributes[i].AttributeType);
                 sb.Append(")");

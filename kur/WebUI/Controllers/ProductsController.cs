@@ -8,9 +8,14 @@ namespace WebUI.Controllers
   {
     private readonly IProductRepository _repo;
 
-    public ProductsController(IProductRepository repo)
+    private readonly ITypesRepository _typesRepository;
+
+    public ProductsController(
+      IProductRepository repo, 
+      ITypesRepository typesRepository)
     {
       _repo = repo;
+      _typesRepository = typesRepository;
     }
 
     public ActionResult Index(int? typeId, string typeName)
@@ -30,12 +35,8 @@ namespace WebUI.Controllers
       var newProd = new ProductCreate { Manufacturers = new SelectList(_repo.GetManuf(), "Key", "Value") };
       if (typeId != 0)
       {
-        foreach (var item in _repo.GetAttributes(typeId))
-        {
-          newProd.Attributes.Add(item, string.Empty);
-        }
-
-        newProd.AttributesDescriptionIds = _repo.GetAttributeIds(typeId);
+        var type = _typesRepository.GetPrTypeById(typeId);
+        newProd.ProductType.AttributeDescriptions = _repo.GetAttributes(typeId);
       }
 
       return View(newProd);

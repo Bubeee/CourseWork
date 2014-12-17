@@ -7,6 +7,6 @@ namespace Interfaces.Entities
   {
     public string TypeName { get; set; }
     public int CategoryId { get; set; }
-    public List<ProductTypeFields> Attributes { get; set; }
+    public List<ProductTypeField> AttributeDescriptions { get; set; }
   }
 }

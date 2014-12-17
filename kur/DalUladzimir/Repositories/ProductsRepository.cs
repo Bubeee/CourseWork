@@ -65,10 +65,10 @@ namespace DalUladzimir.Repositories
         }
 
         var attriQuery = "SELECT [AD].[Name], [A].[Value] " +
-                             "FROM [kur_Vova].[dbo].[Attribute] AS [A] " +
-                             "INNER JOIN [kur_Vova].[dbo].[AttributeDescription] AS [AD] " +
-                             "ON [A].[AttributeDescriptionId] = [AD].[Id] " +
-                             "WHERE [A].[ProductId] = @productId";
+                        "FROM [kur_Vova].[dbo].[Attribute] AS [A] " +
+                        "INNER JOIN [kur_Vova].[dbo].[AttributeDescription] AS [AD] " +
+                        "ON [A].[AttributeDescriptionId] = [AD].[Id] " +
+                        "WHERE [A].[ProductId] = @productId";
 
         command = new SqlCommand(attriQuery, connection);
         command.Parameters.Add(new SqlParameter("@productId", product.Id));
@@ -87,28 +87,30 @@ namespace DalUladzimir.Repositories
 
     public int Create(ProductCreate model)
     {
-      var attributeDescriptions = new List<int>();
+      //var attributeDescriptions = new List<int>();
 
-      var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
-      var query = "SELECT [AttributeDescriptionId] " +
-                  "FROM [kur_Vova].[dbo].[AttributeDescription] " +
-                  "WHERE [TypeId] = @typeId";
+      //var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
+      //var query = "SELECT [AttributeDescriptionId] " +
+      //            "FROM [kur_Vova].[dbo].[AttributeDescription] " +
+      //            "WHERE [TypeId] = @typeId";
 
-      using (var connection = new SqlConnection(conString))
-      {
-        var command = new SqlCommand(query, connection);
-        command.Parameters.Add(new SqlParameter("@typeId", typeId));
-        connection.Open();
-        using (var reader = command.ExecuteReader())
-        {
-          while (reader.Read())
-          {
-            attributeDescriptions.Add((int)reader[0]);
-          }
-        }
-      }
+      //using (var connection = new SqlConnection(conString))
+      //{
+      //  var command = new SqlCommand(query, connection);
+      //  command.Parameters.Add(new SqlParameter("@typeId", typeId));
+      //  connection.Open();
+      //  using (var reader = command.ExecuteReader())
+      //  {
+      //    while (reader.Read())
+      //    {
+      //      attributeDescriptions.Add((int)reader[0]);
+      //    }
+      //  }
+      //}
 
-      return attributeDescriptions;
+      //return attributeDescriptions;
+
+      throw new NotImplementedException();
     }
 
     public IEnumerable<Product> GetProductsByType(int typeId)
@@ -229,16 +231,16 @@ namespace DalUladzimir.Repositories
       return manufacturers;
     }
 
-    public List<string> GetAttributes(int typeId)
+    public List<ProductTypeField> GetAttributes(int typeId)
     {
-      var attributeDescriptions = new List<string>();
+      var attributeDescriptions = new List<ProductTypeField>();
 
       var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
-      var query = "SELECT [Name] " +
+      var query = "SELECT [Name], [AttributeType] " +
                   "FROM [kur_Vova].[dbo].[AttributeDescription] " +
                   "WHERE [TypeId] = @typeId";
 
-      using (var connection = new SqlConnection(conString)) 
+      using (var connection = new SqlConnection(conString))
       {
         var command = new SqlCommand(query, connection);
         command.Parameters.Add(new SqlParameter("@typeId", typeId));
@@ -247,14 +249,19 @@ namespace DalUladzimir.Repositories
         {
           while (reader.Read())
           {
-            attributeDescriptions.Add((string)reader[0]);
+            attributeDescriptions.Add(
+              new ProductTypeField
+            {
+              AttributeName = (string)reader[0],
+              AttributeType = (short)reader[1]
+            });
           }
         }
       }
 
       return attributeDescriptions;
-    } 
-    
+    }
+
     public List<int> GetAttributeIds(int typeId)
     {
       var attributeDescriptions = new List<int>();

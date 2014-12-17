@@ -1,12 +1,10 @@
-﻿using System.Collections.Generic;
-using Interfaces.Interfaces;
+﻿using Interfaces.Interfaces;
 
 namespace Interfaces.Entities
 {
-  public class ProductTypeFields : IEntity
+  public class ProductTypeField : IEntity
   {
-    public string Name { get; set; }
+    public string AttributeName { get; set; }
     public short AttributeType { get; set; }
-    public List<string> EnumValues { get; set; }
   }
 }

@@ -19,14 +19,13 @@ namespace Interfaces.Entities
     public string Picture { get; set; }
     public int Count { get; set; }
     public int TypeId { get; set; }
-    public string StorageSerial { get; set; }//???
-    public List<int> AttributesDescriptionIds { get; set; }
-    public Dictionary<string, string> Attributes { get; set; }
+    public string StorageSerial { get; set; }
+    public List<string> Attributes { get; set; }
     public ProductTypeCreate ProductType { get; set; }
 
     public ProductCreate()
     {
-      Attributes = new Dictionary<string, string>();
+      Attributes = new List<string>();
     }
     public override string ToString()
     {

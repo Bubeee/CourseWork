@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,8 +20,9 @@ namespace Test
 
         private void button1_Click(object sender, EventArgs e)
         {
-            GenerateData generateData = new GenerateData();
-            generateData.Generate();
+            File.AppendAllText("outads.txt","HERE!!!");
+            //GenerateData generateData = new GenerateData();
+            //generateData.Generate();
         }
     }
 }

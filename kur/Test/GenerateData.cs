@@ -4,38 +4,59 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using DalAlexey.Repositories;
+//using DalAlexey.Repositories;
 using System.Data.SqlClient;
 using System.Data;
 using Interfaces.Entities;
+using Interfaces.Interfaces;
 
 namespace Test
 {
     public class GenerateData
     {
-        ProductRepository productRepository = new ProductRepository();
-        ProductTypeRepository productTypeRepository = new ProductTypeRepository();
-        CategoriesRepository categoryTypeRepository = new CategoriesRepository();
+        private IProductRepository productRepository;
+        private ITypesRepository productTypeRepository;
+        private ICategoriesRepository categoryTypeRepository;
 
-        public static string connectionString = @"Data Source=BUMBLEBEE\SQLEXPRESS;Integrated Security=true";
-        public static string workDatabaseName = "kur";
+        private bool useAlexeyBase;
+
+        public GenerateData(bool useAlexeyBase)
+        {
+            this.useAlexeyBase = useAlexeyBase;
+            if (useAlexeyBase)
+            {
+                productRepository = new DalAlexey.Repositories.ProductRepository();
+                productTypeRepository = new DalAlexey.Repositories.ProductTypeRepository();
+                categoryTypeRepository = new DalAlexey.Repositories.CategoriesRepository();
+            }
+            else
+            {
+                productRepository = new DalUladzimir.Repositories.ProductsRepository();
+                productTypeRepository = new DalUladzimir.Repositories.TypesRepository();
+                categoryTypeRepository = new DalUladzimir.Repositories.CategoriesRepository();
+            }
+        }
+
+
+        //public static string connectionString = @"Data Source=BUMBLEBEE\SQLEXPRESS;Integrated Security=true";
+        //public static string workDatabaseName = "kur";
 
         const string picturePath = "Content/Pictures/picture.jpg";
 
-        static int manufacturerStartId = 1;
-        static int manufacturerCount = 40;
+        public static int manufacturerStartId = 1;
+        public static int manufacturerCount = 40;
 
-        static int deliveryStartId = 1;
-        static int deliveryCount = 40;
+        public static int deliveryStartId = 1;
+        public static int deliveryCount = 40;
 
-        static int categoryStartId = 1;
-        static int categoryCount = 40;
+        public static int categoryStartId = 1;
+        public static int categoryCount = 40;
 
-        static int typeProductStartId = 1;
-        static int typeProductCount = 40;
+        public static int typeProductStartId = 1;
+        public static int typeProductCount = 40;
 
-        static int productStartId = 1;
-        static int productCount = 40;
+        public static int productStartId = 1;
+        public static int productCount = 40;
 
         public void Generate()
         {
@@ -47,93 +68,7 @@ namespace Test
             GenerateTypeProduct();
             GenerateProduct();
         }
-        public void ClearBase()
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                connection.ChangeDatabase(workDatabaseName);
-
-                using (SqlCommand command = new SqlCommand("", connection))
-                {
-
-                    //for (int i = 1; i <= 500; i++)
-                    //{
-                    //    try
-                    //    {
-                    //        command.CommandText = "DROP TABLE type_product" + i;
-                    //        command.ExecuteNonQuery();
-                    //    }
-                    //    catch (Exception ex) { }
-                    //}
-
-                    command.CommandText = "SELECT MIN([id]) AS min_id FROM [type_product]";
-                    object result = command.ExecuteScalar();
-                    if (DBNull.Value != result)
-                    {
-
-                        int min = Convert.ToInt32(result);
-
-                        command.CommandText = "SELECT MAX([id]) AS max_id FROM [type_product]";
-                        int max = Convert.ToInt32(command.ExecuteScalar());
-
-                        for (int i = min; i <= max; i++)
-                        {
-                            try
-                            {
-                                command.CommandText = "DROP TABLE type_product" + i;
-                                command.ExecuteNonQuery();
-                            }
-                            catch (Exception ex) { }
-                        }
-
-                    }
-
-                    command.CommandText =
-                        "DELETE FROM [log] " +
-                        "DELETE FROM product " +
-                        "DELETE FROM field " +
-                        "DELETE FROM [type_product] " +
-                        "DELETE FROM [user] " +
-                        "DELETE FROM manufacturer " +
-                        "DELETE FROM category " +
-                        "DELETE FROM delivery " +
-                        "DELETE FROM storage " +
-                        "DELETE FROM enum_view ";
-                    command.ExecuteNonQuery();
-                }
-            }
-        }
-
-        public void GetStartIds()
-        {
-            using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                connection.Open();
-                connection.ChangeDatabase(workDatabaseName);
-
-                using (SqlCommand command = new SqlCommand("", connection))
-                {
-                    command.CommandText = "SELECT IDENT_CURRENT( 'manufacturer' )";
-                    object asd = command.ExecuteScalar();
-                    manufacturerStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
-
-                    command.CommandText = "SELECT IDENT_CURRENT( 'delivery' )";
-                    deliveryStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
-
-                    command.CommandText = "SELECT IDENT_CURRENT( 'category' )";
-                    categoryStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
-
-                    command.CommandText = "SELECT IDENT_CURRENT( 'type_product' )";
-                    typeProductStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
-
-                    command.CommandText = "SELECT IDENT_CURRENT( 'product' )";
-                    productStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
-
-
-                }
-            }
-        }
+      
 
         public void GenerateManufacturers()
         {
@@ -203,3 +138,90 @@ namespace Test
 
     }
 }
+  //public void ClearBase()
+  //      {
+  //          using (SqlConnection connection = new SqlConnection(connectionString))
+  //          {
+  //              connection.Open();
+  //              connection.ChangeDatabase(workDatabaseName);
+
+  //              using (SqlCommand command = new SqlCommand("", connection))
+  //              {
+
+  //                  //for (int i = 1; i <= 500; i++)
+  //                  //{
+  //                  //    try
+  //                  //    {
+  //                  //        command.CommandText = "DROP TABLE type_product" + i;
+  //                  //        command.ExecuteNonQuery();
+  //                  //    }
+  //                  //    catch (Exception ex) { }
+  //                  //}
+
+  //                  command.CommandText = "SELECT MIN([id]) AS min_id FROM [type_product]";
+  //                  object result = command.ExecuteScalar();
+  //                  if (DBNull.Value != result)
+  //                  {
+
+  //                      int min = Convert.ToInt32(result);
+
+  //                      command.CommandText = "SELECT MAX([id]) AS max_id FROM [type_product]";
+  //                      int max = Convert.ToInt32(command.ExecuteScalar());
+
+  //                      for (int i = min; i <= max; i++)
+  //                      {
+  //                          try
+  //                          {
+  //                              command.CommandText = "DROP TABLE type_product" + i;
+  //                              command.ExecuteNonQuery();
+  //                          }
+  //                          catch (Exception ex) { }
+  //                      }
+
+  //                  }
+
+  //                  command.CommandText =
+  //                      "DELETE FROM [log] " +
+  //                      "DELETE FROM product " +
+  //                      "DELETE FROM field " +
+  //                      "DELETE FROM [type_product] " +
+  //                      "DELETE FROM [user] " +
+  //                      "DELETE FROM manufacturer " +
+  //                      "DELETE FROM category " +
+  //                      "DELETE FROM delivery " +
+  //                      "DELETE FROM storage " +
+  //                      "DELETE FROM enum_view ";
+  //                  command.ExecuteNonQuery();
+  //              }
+  //          }
+  //      }
+
+  //      public void GetStartIds()
+  //      {
+  //          using (SqlConnection connection = new SqlConnection(connectionString))
+  //          {
+  //              connection.Open();
+  //              connection.ChangeDatabase(workDatabaseName);
+
+  //              using (SqlCommand command = new SqlCommand("", connection))
+  //              {
+  //                  command.CommandText = "SELECT IDENT_CURRENT( 'manufacturer' )";
+  //                  object asd = command.ExecuteScalar();
+  //                  manufacturerStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
+
+  //                  command.CommandText = "SELECT IDENT_CURRENT( 'delivery' )";
+  //                  deliveryStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
+
+  //                  command.CommandText = "SELECT IDENT_CURRENT( 'category' )";
+  //                  categoryStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
+
+  //                  command.CommandText = "SELECT IDENT_CURRENT( 'type_product' )";
+  //                  typeProductStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
+
+  //                  command.CommandText = "SELECT IDENT_CURRENT( 'product' )";
+  //                  productStartId = Convert.ToInt32(command.ExecuteScalar()) + 1;
+
+
+  //              }
+  //          }
+  //      }

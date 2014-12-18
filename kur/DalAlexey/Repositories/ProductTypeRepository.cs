@@ -64,7 +64,7 @@ namespace DalAlexey.Repositories
                         command.Parameters.Add(new SqlParameter("@categoryId", productTypeCreate.CategoryId));
                         command.Parameters.Add(new SqlParameter("@productTypeName", productTypeCreate.TypeName));
 
-                        int productTypeId = (int)command.ExecuteScalar();
+                        int productTypeId = Convert.ToInt32(command.ExecuteScalar());
 
                         //создание таблицы типа товара
                         command.CommandText = "CREATE TABLE [type_product" + productTypeId + "]" +

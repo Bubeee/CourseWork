@@ -83,9 +83,9 @@ namespace DalAlexey.Repositories
                     {
                         command.CommandText = "INSERT INTO [category] ([name],[picture]) VALUES (@name,@picture)";
                         command.Parameters.Add(new SqlParameter("@name", model.Name));
-                        command.Parameters.Add(new SqlParameter("@picture", model.Image));
+                        command.Parameters.Add(new SqlParameter("@picture", model.Image ?? "Files/1.gif"));
 
-                        categoryId = (int)command.ExecuteNonQuery();
+                        categoryId = Convert.ToInt32(command.ExecuteNonQuery());
 
                         model.Id = categoryId;
                     }

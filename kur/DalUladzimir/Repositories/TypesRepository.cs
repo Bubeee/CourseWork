@@ -107,7 +107,7 @@ namespace DalUladzimir.Repositories
           command.Parameters.Add(new SqlParameter("@categoryId", model.CategoryId));
           command.Parameters.Add(new SqlParameter("@typeName", model.TypeName));
           connection.Open();
-          newTypeId = (int)command.ExecuteScalar();
+          newTypeId = Convert.ToInt32(command.ExecuteScalar());
         }
 
         foreach (var item in model.AttributeDescriptions)

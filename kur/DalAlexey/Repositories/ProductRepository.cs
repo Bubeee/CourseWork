@@ -103,7 +103,7 @@ namespace DalAlexey.Repositories
                             command.Parameters.Add(new SqlParameter("@count", model.Count));
 
                             command.ExecuteNonQuery();
-
+                          
                             //вставка в таблицу типа товара
                             command.CommandText = "INSERT INTO [type_product" + model.TypeId + "]" +
                                                     "(" +

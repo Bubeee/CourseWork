@@ -10,7 +10,7 @@ namespace WebUI.AutoFacModules
     public bool LoadAlexey { get; set; }
     protected override void Load(ContainerBuilder builder)
     {
-      LoadAlexey = true;
+      LoadAlexey = false;
       if (LoadAlexey)
       {
         builder.RegisterType<ProductRepository>().As<IProductRepository>();

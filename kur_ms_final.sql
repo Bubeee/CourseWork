@@ -1,3 +1,12 @@
+USE [master]
+GO
+DROP DATABASE [kur]
+GO
+CREATE DATABASE [kur]
+GO
+USE [kur]
+GO
+
 CREATE TABLE [category] ( 
 	[id] int identity(1,1)  NOT NULL,
 	[name] nvarchar(40) NOT NULL,
@@ -54,7 +63,7 @@ CREATE TABLE [product] (
 	[model] nvarchar(50) NOT NULL,
 	[manufacturer_id] int NOT NULL,
 	[price] int NOT NULL,
-	[warranty] int,
+	[warranty] nvarchar(50) NOT NULL,
 	[delivery_id] int NOT NULL,
 	[picture] nvarchar(100),
 	[count] int NOT NULL
@@ -69,7 +78,6 @@ CREATE TABLE [storage] (
 
 CREATE TABLE [type_product] ( 
 	[id] int identity(1,1)  NOT NULL,
-	[table_name] varchar(30) NOT NULL,
 	[category_id] int NOT NULL,
 	[view_name] nvarchar(50) NOT NULL
 )
@@ -80,7 +88,7 @@ CREATE TABLE [user] (
 	[name] nvarchar(30) NOT NULL,
 	[login] varchar(30) NOT NULL,
 	[password] varchar(100) NOT NULL,
-	[money] bigint NOT NULL
+	[money] int NOT NULL
 )
 ;
 
@@ -111,10 +119,6 @@ ALTER TABLE [product]
 
 ALTER TABLE [storage]
 	ADD CONSTRAINT [UQ_storage_serial] UNIQUE ([serial])
-;
-
-ALTER TABLE [type_product]
-	ADD CONSTRAINT [UQ_type_goods_table_name] UNIQUE ([table_name])
 ;
 
 ALTER TABLE [type_product]

@@ -127,8 +127,8 @@ namespace DalUladzimir.Repositories
             command.Parameters.Add(new SqlParameter("@prodId", newId));
             command.Parameters.Add(new SqlParameter("@attributeDescrId", model.ProductType.AttributeDescriptions[i].Id));
             command.Parameters.Add(new SqlParameter("@value", model.Attributes[i]));
-            connection.Open();
             command.ExecuteScalar();
+            command.Parameters.Clear();
           }
         }
       }

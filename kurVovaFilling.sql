@@ -36,21 +36,6 @@ GO
 INSERT INTO [dbo].[AttributeDescription] ([TypeId], [Name], [AttributeType])
 VALUES (1, N'Steam supply', 2)
 
--------- Enum
-
-INSERT INTO [dbo].[Enum] (AttributeId, Value)
-VALUES (4, N'нерж. сталь')
-INSERT INTO [dbo].[Enum] (AttributeId, Value)
-VALUES (4, N'алюминий')
-INSERT INTO [dbo].[Enum] (AttributeId, Value)
-VALUES (4, N'керамика')
-INSERT INTO [dbo].[Enum] (AttributeId, Value)
-VALUES (4, N'металлокерамика')
-INSERT INTO [dbo].[Enum] (AttributeId, Value)
-VALUES (4, N'титан')
-INSERT INTO [dbo].[Enum] (AttributeId, Value)
-VALUES (4, N'тефлон')
-
 ------- Products
 
 GO

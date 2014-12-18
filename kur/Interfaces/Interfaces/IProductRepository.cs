@@ -13,7 +13,5 @@ namespace Interfaces.Interfaces
     Dictionary<int, string> GetManuf();
     Dictionary<int, string> GetDeliveries();
     Dictionary<int, string> GetStorages();
-
-    int Buy(UserBuying purchase);
   }
 }

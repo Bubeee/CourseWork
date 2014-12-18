@@ -315,10 +315,5 @@ namespace DalAlexey.Repositories
         {
             throw new NotImplementedException();
         }
-
-      public int Buy(UserBuying purchase)
-      {
-        throw new NotImplementedException();
-      }
     }
 }

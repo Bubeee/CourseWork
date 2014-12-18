@@ -11,16 +11,18 @@ namespace WebUI.AutoFacModules
     public bool LoadAlexey { get; set; }
     protected override void Load(ContainerBuilder builder)
     {
+      LoadAlexey = true;
       if (LoadAlexey)
       {
         builder.RegisterType<ProductRepository>().As<IProductRepository>();
         builder.RegisterType<ProductTypeRepository>().As<ITypesRepository>();
+        builder.RegisterType<DalAlexey.Repositories.CategoriesRepository>().As<ICategoriesRepository>();
       }
       else
       {
         builder.RegisterType<ProductsRepository>().As<IProductRepository>();
         builder.RegisterType<TypesRepository>().As<ITypesRepository>();
-        builder.RegisterType<CategoriesRepository>().As<ICategoriesRepository>();
+        builder.RegisterType<DalUladzimir.Repositories.CategoriesRepository>().As<ICategoriesRepository>();
       }
     }
   }

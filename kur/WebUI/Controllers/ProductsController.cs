@@ -55,6 +55,15 @@ namespace WebUI.Controllers
       if (ModelState.IsValid)
       {
         _repo.Create(newProduct);
+
+        return RedirectToAction("Index");
+      }
+
+      newProduct.Manufacturers = new SelectList(_repo.GetManuf(), "Key", "Value");
+      newProduct.Deliveries = new SelectList(_repo.GetDeliveries(), "Key", "Value");
+      if (newProduct.TypeId != 0)
+      {
+        newProduct.ProductType = _typesRepository.GetProductTypeCreateById(newProduct.TypeId);
       }
 
       return View(newProduct);

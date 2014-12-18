@@ -32,5 +32,21 @@ namespace WebUI.Controllers
 
       return new EmptyResult();
     }
+
+    public ActionResult CreateType()
+    {
+      return View();
+    }
+
+    [HttpPost]
+    public ActionResult CreateType(ProductTypeCreate newType)
+    {
+      if (newType != null)
+      {
+        _repository.Create(newType);
+      }
+
+      return RedirectToAction("Index");
+    }
   }
 }

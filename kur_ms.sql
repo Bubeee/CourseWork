@@ -1,4 +1,8 @@
+DROP DATABASE [kur]
+
 CREATE DATABASE [kur]
+GO
+USE [kur] 
 
 CREATE TABLE [category] ( 
 	[id] int identity(1,1)  NOT NULL,

@@ -67,8 +67,6 @@ namespace Test
                     //    catch (Exception ex) { }
                     //}
 
-
-
                     command.CommandText = "SELECT MIN([id]) AS min_id FROM [type_product]";
                     object result = command.ExecuteScalar();
                     if (DBNull.Value != result)

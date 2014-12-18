@@ -90,11 +90,15 @@ namespace DalUladzimir.Repositories
 
     public int Create(ProductTypeCreate model)
     {
-      int newProdId;
+      int newTypeId;
 
       var conString = ConfigurationManager.ConnectionStrings["kurVova"].ConnectionString;
       var query = "INSERT INTO [dbo].[Types] ([Name], [CategoryId]) " +
-                  "VALUES (@typeName, @categoryId)";
+                  "VALUES (@typeName, @categoryId)" +
+                  "SELECT CAST(scope_identity() AS int)";
+
+      var query2 = "INSERT INTO [dbo].[AttributeDescription] ([TypeId], [Name], [AttributeType]) " +
+                   "VALUES (@typeId, @name, @categoryId)";
 
       using (var connection = new SqlConnection(conString))
       {
@@ -103,11 +107,22 @@ namespace DalUladzimir.Repositories
           command.Parameters.Add(new SqlParameter("@categoryId", model.CategoryId));
           command.Parameters.Add(new SqlParameter("@typeName", model.TypeName));
           connection.Open();
-          newProdId = (int)command.ExecuteScalar();
+          newTypeId = (int)command.ExecuteScalar();
+        }
+
+        foreach (var item in model.AttributeDescriptions)
+        {
+          using (var command = new SqlCommand(query2, connection))
+          {
+            command.Parameters.Add(new SqlParameter("@typeId", newTypeId));
+            command.Parameters.Add(new SqlParameter("@name", item.AttributeName));
+            command.Parameters.Add(new SqlParameter("@categoryId", item.AttributeType));
+            command.ExecuteScalar();
+          }
         }
       }
 
-      return newProdId;
+      return newTypeId;
     }
 
     public ProductType GetById(int id)

@@ -1,7 +1,6 @@
 ﻿using Autofac;    
 using DalAlexey.Repositories;
 using DalUladzimir.Repositories;
-using Interfaces.Entities;
 using Interfaces.Interfaces;
 
 namespace WebUI.AutoFacModules
@@ -11,7 +10,6 @@ namespace WebUI.AutoFacModules
     public bool LoadAlexey { get; set; }
     protected override void Load(ContainerBuilder builder)
     {
-      LoadAlexey = true;
       if (LoadAlexey)
       {
         builder.RegisterType<ProductRepository>().As<IProductRepository>();

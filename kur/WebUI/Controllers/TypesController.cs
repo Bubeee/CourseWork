@@ -33,20 +33,34 @@ namespace WebUI.Controllers
       return new EmptyResult();
     }
 
-    public ActionResult CreateType()
+    public ActionResult CreateType(int categoryId)
     {
-      return View();
+      var newType = new ProductTypeCreate
+      {
+        AttributeDescriptions = new List<ProductTypeField>(),
+        CategoryId = categoryId
+      };
+
+      newType.AttributeDescriptions.Add(new ProductTypeField { AttributeName = string.Empty });
+      newType.AttributeDescriptions.Add(new ProductTypeField { AttributeName = string.Empty });
+      newType.AttributeDescriptions.Add(new ProductTypeField { AttributeName = string.Empty });
+      newType.AttributeDescriptions.Add(new ProductTypeField { AttributeName = string.Empty });
+      newType.AttributeDescriptions.Add(new ProductTypeField { AttributeName = string.Empty });
+
+      return View(newType);
     }
 
     [HttpPost]
     public ActionResult CreateType(ProductTypeCreate newType)
     {
-      if (newType != null)
+      if (ModelState.IsValid)
       {
         _repository.Create(newType);
+
+        return RedirectToAction("Index", new { categoryId = newType.CategoryId });
       }
 
-      return RedirectToAction("Index");
+      return View(newType);
     }
   }
 }

@@ -7,12 +7,8 @@ GO
 USE [kur_Vova]
 GO
 
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Log_Products]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE [Log] DROP CONSTRAINT [FK_Log_Products];
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Log_User]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
-ALTER TABLE [Log] DROP CONSTRAINT [FK_Log_User];
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Enum_Attribute_desctription]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
+ALTER TABLE [Enum] DROP CONSTRAINT [FK_Enum_Attribute_desctription];
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[FK_Attribute_Types]') AND OBJECTPROPERTY(id, 'IsForeignKey') = 1)
 ALTER TABLE [AttributeDescription] DROP CONSTRAINT [FK_Attribute_Types];
@@ -40,11 +36,8 @@ ALTER TABLE [Products] DROP CONSTRAINT [FK_Products_Types];
 
 
 
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[User]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE [User];
-
-IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Log]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
-DROP TABLE [Log];
+IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Enum]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
+DROP TABLE [Enum];
 
 IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[AttributeDescription]') AND  OBJECTPROPERTY(id, 'IsUserTable') = 1)
 DROP TABLE [AttributeDescription];
@@ -71,18 +64,10 @@ IF EXISTS (SELECT * FROM dbo.sysobjects WHERE id = object_id('[Products]') AND  
 DROP TABLE [Products];
 
 
-CREATE TABLE [User] ( 
+CREATE TABLE [Enum] ( 
 	[Id] int identity(1,1)  NOT NULL,
-	[UserName] nvarchar(50) NOT NULL,
-	[Password] nvarchar(50) NOT NULL,
-	[Money] int NOT NULL
-);
-
-CREATE TABLE [Log] ( 
-	[Id] int identity(1,1)  NOT NULL,
-	[UserId] int NOT NULL,
-	[ProductId] int NOT NULL,
-	[Serial] nvarchar(50) NULL
+	[AttributeId] int NOT NULL,
+	[Value] nvarchar(20) NOT NULL
 );
 
 CREATE TABLE [AttributeDescription] ( 
@@ -141,10 +126,7 @@ CREATE TABLE [Products] (
 );
 
 
-ALTER TABLE [User] ADD CONSTRAINT [PK_User] 
-	PRIMARY KEY CLUSTERED ([Id]);
-
-ALTER TABLE [Log] ADD CONSTRAINT [PK_Log] 
+ALTER TABLE [Enum] ADD CONSTRAINT [PK_Enum] 
 	PRIMARY KEY CLUSTERED ([Id]);
 
 ALTER TABLE [AttributeDescription] ADD CONSTRAINT [PK_Attribute] 
@@ -173,13 +155,8 @@ ALTER TABLE [Products] ADD CONSTRAINT [PK_Product]
 
 
 
-ALTER TABLE [Log] ADD CONSTRAINT [FK_Log_Products] 
-	FOREIGN KEY ([ProductId]) REFERENCES [Products] ([Id])
-	ON DELETE CASCADE ON UPDATE CASCADE;
-
-ALTER TABLE [Log] ADD CONSTRAINT [FK_Log_User] 
-	FOREIGN KEY ([UserId]) REFERENCES [User] ([Id])
-	ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE [Enum] ADD CONSTRAINT [FK_Enum_Attribute_desctription] 
+	FOREIGN KEY ([AttributeId]) REFERENCES [AttributeDescription] ([Id]);
 
 ALTER TABLE [AttributeDescription] ADD CONSTRAINT [FK_Attribute_Types] 
 	FOREIGN KEY ([TypeId]) REFERENCES [Types] ([Id]);

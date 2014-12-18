@@ -73,22 +73,5 @@ namespace WebUI.Controllers
     {
       return View(_repo.GetById(id));
     }
-
-    public ActionResult Buy(int productId)
-    {
-      var user = new UserBuying
-      {
-        ProductId = productId
-      };
-
-      return View();
-    }
-
-    [HttpPost]
-    public ActionResult Buy(UserBuying user)
-    {
-
-      return View();
-    }
   }
 }

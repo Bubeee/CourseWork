@@ -14,6 +14,9 @@
     <th>
       @Html.DisplayNameFor(model => model.Name)
     </th>
+    <th>
+      Products
+    </th>
   </tr>
 
   @foreach (var item in Model)
@@ -23,6 +26,9 @@
         @Html.ActionLink(item.Name, "Index", "Products", new { typeId = item.Id, typeName = item.Name }, null)
       </td>
       <td></td>
+      <td>
+        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) 
+      </td>
     </tr>
   }
 

@@ -301,10 +301,5 @@ namespace DalUladzimir.Repositories
 
       return storages;
     }
-
-    public int Buy(UserBuying purchase)
-    {
-      throw new NotImplementedException();
-    }
   }
 }

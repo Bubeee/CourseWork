@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
 using Interfaces.Entities;
@@ -80,9 +81,9 @@ namespace DalUladzimir.Repositories
         using (var command = new SqlCommand(query, connection))
         {
           command.Parameters.Add(new SqlParameter("@Name", model.Name));
-          command.Parameters.Add(new SqlParameter("@Image", model.Image));
+          command.Parameters.Add(new SqlParameter("@Image", model.Image ?? @"Files/1.gif"));
           connection.Open();
-          newId = (int)command.ExecuteScalar();
+          newId = Convert.ToInt32(command.ExecuteScalar());
         }
       }
 

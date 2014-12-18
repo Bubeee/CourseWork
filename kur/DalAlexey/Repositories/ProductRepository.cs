@@ -75,19 +75,18 @@ namespace DalAlexey.Repositories
             {
                 connection.Open();
                 connection.ChangeDatabase(workDatabaseName);
-                SqlTransaction trans = connection.BeginTransaction();
+                //SqlTransaction trans = connection.BeginTransaction();
 
-                try
+                //try
                 {
-                    connection.Open();
-                    connection.ChangeDatabase(workDatabaseName);
+                    //connection.Open();
+                    //connection.ChangeDatabase(workDatabaseName);
 
-                    DataTable dataTable = new DataTable();
-                    using (SqlCommand command = new SqlCommand("", connection, trans))
+                    using (SqlCommand command = new SqlCommand("", connection))
                     {
-                        trans = connection.BeginTransaction();
+                        //trans = connection.BeginTransaction();
                         {
-                            command.Transaction = trans;
+                            //command.Transaction = trans;
                             command.CommandText = "INSERT INTO [product]" +
                                                         "([type_id],[model],[manufacturer_id],[price],[warranty]," +
                                                             "[delivery_id],[picture],[count])" +
@@ -103,7 +102,7 @@ namespace DalAlexey.Repositories
                             //TODO Make count other
                             command.Parameters.Add(new SqlParameter("@count", model.Count));
 
-                            int productId = (int)command.ExecuteNonQuery();
+                            int productId = Convert.ToInt32(command.ExecuteNonQuery());
 
                             model.Id = productId;
 
@@ -125,12 +124,12 @@ namespace DalAlexey.Repositories
                         }
                     }
                 }
-                catch (Exception ex)
-                {
-                    if (trans != null) trans.Rollback();
-                    //throw;
-                    return -1;
-                }
+                //catch (Exception ex)
+                //{
+                //    if (trans != null) trans.Rollback();
+                //    //throw;
+                //    return -1;
+                //}
             }
             return 1;
         }

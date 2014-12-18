@@ -21,8 +21,8 @@ namespace Test
         private void button1_Click(object sender, EventArgs e)
         {
             File.AppendAllText("outads.txt","HERE!!!");
-            GenerateData generateData = new GenerateData();
-            generateData.Generate();
+            //GenerateData generateData = new GenerateData();
+            //generateData.Generate();
         }
     }
 }

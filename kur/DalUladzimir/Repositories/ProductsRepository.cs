@@ -117,7 +117,7 @@ namespace DalUladzimir.Repositories
           command.Parameters.Add(new SqlParameter("@deliveryId", model.DeliveryId));
           command.Parameters.Add(new SqlParameter("@manId", model.ManufacturerId));
           connection.Open();
-          newId = (int)command.ExecuteScalar();
+          newId = Convert.ToInt32(command.ExecuteScalar());
         }
 
         using (var command = new SqlCommand(query2, connection))

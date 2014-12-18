@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Interfaces.Entities;
 using Interfaces.Interfaces;
 
@@ -53,8 +52,12 @@ namespace WebUI.Controllers
     [HttpPost]
     public ActionResult AddProduct(ProductCreate newProduct)
     {
-      _repo.Create(newProduct);
-      return View();
+      if (ModelState.IsValid)
+      {
+        _repo.Create(newProduct);
+      }
+
+      return View(newProduct);
     }
 
     public ActionResult Details(int id)

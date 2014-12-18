@@ -1,23 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web.Mvc;
+using System.ComponentModel.DataAnnotations;
 
 namespace Interfaces.Entities
 {
   public class ProductCreate
   {
     public int Id { get; set; }
+    [Required]
     public string Name { get; set; }
+    [Required]
     public int ManufacturerId { get; set; }
     public SelectList Manufacturers { get; set; }
+    [Required]
     public int Price { get; set; }
+    [Required]
     public string Warranty { get; set; }
+    [Required]
     public int DeliveryId { get; set; }
     public SelectList Deliveries { get; set; }
     public string Picture { get; set; }
+    [Required]
     public int Count { get; set; }
     public int TypeId { get; set; }
     public string StorageSerial { get; set; }

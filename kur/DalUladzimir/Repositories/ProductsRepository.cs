@@ -97,9 +97,9 @@ namespace DalUladzimir.Repositories
                   "[Count], " +
                   "[TypeId], " +
                   "[DeliveryId], " +
-                  "[ManufacturerId], " +
-                  "[StorageId]) " +
-                  "VALUES (@name, @price, @warranty, @pic, @count, @typeId, @deliveryId, @manId, @storId);";
+                  "[ManufacturerId]) " +
+                  "VALUES (@name, @price, @warranty, @pic, @count, @typeId, @deliveryId, @manId);" +
+                  "SELECT CAST(scope_identity() AS int)";
 
       var query2 = "INSERT INTO [dbo].[Attribute] (ProductId, AttributeDescriptionId, Value)" +
                    "VALUES (@prodId, @attributeDescrId, @value)";
@@ -108,15 +108,14 @@ namespace DalUladzimir.Repositories
       {
         using (var command = new SqlCommand(query, connection))
         {
-          command.Parameters.Add(new SqlParameter("@name", model.Name));
+          command.Parameters.Add(new SqlParameter("@name", model.Name ?? string.Empty));
           command.Parameters.Add(new SqlParameter("@price", model.Price));
-          command.Parameters.Add(new SqlParameter("@warranty", model.Warranty));
-          command.Parameters.Add(new SqlParameter("@pic", model.Picture));
+          command.Parameters.Add(new SqlParameter("@warranty", model.Warranty ?? string.Empty));
+          command.Parameters.Add(new SqlParameter("@pic", model.Picture ?? string.Empty));
           command.Parameters.Add(new SqlParameter("@count", model.Count));
           command.Parameters.Add(new SqlParameter("@typeId", model.TypeId));
           command.Parameters.Add(new SqlParameter("@deliveryId", model.DeliveryId));
           command.Parameters.Add(new SqlParameter("@manId", model.ManufacturerId));
-          command.Parameters.Add(new SqlParameter("@storId", null));
           connection.Open();
           newId = (int)command.ExecuteScalar();
         }
@@ -180,7 +179,7 @@ namespace DalUladzimir.Repositories
               Name = reader[1] == DBNull.Value ? null : (string)reader[1],
               Price = (int)reader[2],
               Warranty = reader[3] == DBNull.Value ? null : (string)reader[3],
-              Picture = reader[3] == DBNull.Value ? null : (string)reader[4],
+              Picture = reader[3] == DBNull.Value ? "Files/1.jpg" : (string)reader[4],
               Count = (int)reader[5],
               ProductType = new ProductType
               {

@@ -73,6 +73,8 @@ namespace DalAlexey.Repositories
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
+                connection.Open();
+                connection.ChangeDatabase(workDatabaseName);
                 SqlTransaction trans = connection.BeginTransaction();
 
                 try

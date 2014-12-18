@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebUI", "WebUI\WebUI.csproj", "{04A2D1BF-4B36-426C-BF8F-9CDE4F810299}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DalUladzimir", "DalUladzimir\DalUladzimir.csproj", "{9B35FD14-E814-4FB1-8AEF-609E986F9E40}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\Interfaces.csproj", "{21EE8D13-CFAC-47E4-A0BC-B2100C24BB21}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{CE0FB1F2-5597-4D2F-A53B-EAA7DA50C9B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{21EE8D13-CFAC-47E4-A0BC-B2100C24BB21}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{21EE8D13-CFAC-47E4-A0BC-B2100C24BB21}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{21EE8D13-CFAC-47E4-A0BC-B2100C24BB21}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CE0FB1F2-5597-4D2F-A53B-EAA7DA50C9B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CE0FB1F2-5597-4D2F-A53B-EAA7DA50C9B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CE0FB1F2-5597-4D2F-A53B-EAA7DA50C9B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CE0FB1F2-5597-4D2F-A53B-EAA7DA50C9B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

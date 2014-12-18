@@ -49,16 +49,12 @@ namespace DalAlexey.Repositories
             {
                 connection.Open();
                 connection.ChangeDatabase(workDatabaseName);
+                SqlTransaction trans = connection.BeginTransaction();
 
-                DataTable dataTable = new DataTable();
-
-                using (SqlCommand command = new SqlCommand())
+                using (SqlCommand command = new SqlCommand("",connection,trans))
                 {
-                    command.Connection = connection;
-                    try
+                    //try
                     {
-                        connection.BeginTransaction();
-
                         //создание типа товара
                         command.CommandText = "INSERT INTO [type_product] " +
                                                 "(category_id,view_name) " +
@@ -81,21 +77,21 @@ namespace DalAlexey.Repositories
                         command.Parameters.RemoveAt(1);
                         command.ExecuteNonQuery();
 
-                        command.CommandText = "INSERT INTO [field] ([type_product_id],[view_name],[field_type]) VALUES " +
-                                                "(" +
-                                                    CreateProductTypeFieldsQuery(productTypeId, productTypeCreate.AttributeDescriptions) +
-                                                ")";
+                        command.CommandText =
+                            "INSERT INTO [field] ([type_product_id],[view_name],[field_type]) VALUES " +
+                            CreateProductTypeFieldsQuery(productTypeId, productTypeCreate.AttributeDescriptions);
                         command.Parameters.RemoveAt(0);
                         command.ExecuteNonQuery();
 
-                        command.Transaction.Commit();
+                        trans.Commit();
                     }
-                    catch (Exception ex)
-                    {
-                        command.Transaction.Rollback();
-                        //throw;
-                        return 1;
-                    }
+                    ////uncomment
+                    //catch (Exception ex)
+                    //{
+                    //    trans.Rollback();
+                    //    //throw;
+                    //    return 1;
+                    //}
                 }
             }
             return 1;
@@ -190,7 +186,7 @@ namespace DalAlexey.Repositories
                         {
                             var productTypeField = new ProductTypeField();
                             productTypeField.AttributeName = reader.GetString(0);
-                            productTypeField.AttributeType = reader.GetInt16(1);
+                            productTypeField.AttributeType = (short)reader.GetInt32(1);
                             productTypeCreate.AttributeDescriptions.Add(productTypeField);
                         }
                     }

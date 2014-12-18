@@ -74,16 +74,13 @@ namespace DalAlexey.Repositories
         {
             int categoryId;
             using (SqlConnection connection = new SqlConnection(connectionString))
-            {
-                SqlTransaction trans = connection.BeginTransaction();
+            {                
                 connection.Open();
                 connection.ChangeDatabase(workDatabaseName);
 
-                using (SqlCommand command = new SqlCommand("", connection, trans))
+                using (SqlCommand command = new SqlCommand("", connection))
                 {
-                    trans = connection.BeginTransaction();
                     {
-                        command.Transaction = trans;
                         command.CommandText = "INSERT INTO [category] ([name],[picture]) VALUES (@name,@picture)";
                         command.Parameters.Add(new SqlParameter("@name", model.Name));
                         command.Parameters.Add(new SqlParameter("@picture", model.Image));

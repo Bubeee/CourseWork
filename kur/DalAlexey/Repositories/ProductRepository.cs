@@ -132,7 +132,6 @@ namespace DalAlexey.Repositories
             }
             return 1;
         }
-
         private string CreateProductColumnsQuery(int countColumns)
         {
             var sb = new StringBuilder();
@@ -224,6 +223,7 @@ namespace DalAlexey.Repositories
             }
             return products;
         }
+
         public void AddManufacturer(string manufacturerName, string manufacturerInfo)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -263,7 +263,26 @@ namespace DalAlexey.Repositories
 
         public Dictionary<int, string> GetManuf()
         {
-            throw new NotImplementedException();
+            var manufacturers = new Dictionary<int, string>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                connection.ChangeDatabase(workDatabaseName);
+
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT [id],[name] FROM [manufacturer] ORDER BY [id]";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            manufacturers.Add(reader.GetInt32(0), reader.GetString(1));
+                        }
+                    }
+                }
+            }
+            return manufacturers;
         }
 
         public Dictionary<int, string> GetDeliveries()
@@ -273,8 +292,6 @@ namespace DalAlexey.Repositories
             {
                 connection.Open();
                 connection.ChangeDatabase(workDatabaseName);
-
-                DataTable dataTable = new DataTable();
 
                 using (SqlCommand command = new SqlCommand())
                 {

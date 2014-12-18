@@ -22,28 +22,28 @@ namespace DalAlexey.Repositories
                 connection.Open();
                 connection.ChangeDatabase(workDatabaseName);
 
-                DataTable dataTable = new DataTable();
-
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
                     command.CommandText = "SELECT [p].[id],[p].[type_id],[p].model,[p].[price],[p].[warranty],[p].[picture]," +
                         "[p].[count],[p].[delivery_id],[d].name AS [delivery],[p].[manufacturer_id],[m].name AS [manufacturer] FROM [product] AS [p] JOIN [manufacturer] AS [m] ON [manufacturer_id]=[m].[id] JOIN [delivery]AS [d] ON [delivery_id]=[d].[id] WHERE [p].[id]=(@productid)";
                     command.Parameters.Add(new SqlParameter("@productid", productId));//Здесь это id товара
-                    dataTable.Load(command.ExecuteReader());
-
-                    product.Id = dataTable.Rows[0].Field<int>("id");
-                    product.Name = dataTable.Rows[0].Field<string>("model");
-                    product.Manufacturer = dataTable.Rows[0].Field<string>("manufacturer");
-                    product.Price = dataTable.Rows[0].Field<int>("price");
-                    product.Warranty = dataTable.Rows[0].Field<string>("warranty");
-                    product.Delivery = dataTable.Rows[0].Field<string>("delivery");
-                    product.Picture = dataTable.Rows[0].Field<string>("picture");
-                    product.Count = dataTable.Rows[0].Field<int>("count");
-
                     int productTypeId;
-                    productTypeId = dataTable.Rows[0].Field<int>("type_id");
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        reader.Read();
+                        product.Id = reader.GetInt32(1);
+                        product.Name = reader.GetString(3);
+                        product.Manufacturer = reader.GetString(11);
+                        product.Price = reader.GetInt32(4);
+                        product.Warranty = reader.GetString(5);
+                        product.Delivery = reader.GetString(9);
+                        product.Picture = reader.GetString(6);
+                        product.Count = reader.GetInt32(7);
 
+
+                        productTypeId = reader.GetInt32(2);
+                    }
                     //Название таблицы с этим типом товара
                     command.CommandText = "SELECT [table_name] FROM [type_product] WHERE id = (@producttypeid);";
                     command.Parameters[0].ParameterName = "@producttypeid";
@@ -260,19 +260,20 @@ namespace DalAlexey.Repositories
                 }
             }
         }
+
         public Dictionary<int, string> GetManuf()
         {
             throw new System.NotImplementedException();
         }
 
-      public Dictionary<int, string> GetDeliveries()
-      {
-        throw new NotImplementedException();
-      }
+        public Dictionary<int, string> GetDeliveries()
+        {
+            throw new NotImplementedException();
+        }
 
-      public Dictionary<int, string> GetStorages()
-      {
-        throw new NotImplementedException();
-      }
+        public Dictionary<int, string> GetStorages()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

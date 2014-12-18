@@ -98,13 +98,11 @@ namespace DalAlexey.Repositories
                             command.Parameters.Add(new SqlParameter("@price", model.Price));
                             command.Parameters.Add(new SqlParameter("@warranty", model.Warranty));
                             command.Parameters.Add(new SqlParameter("@deliveryId", model.DeliveryId));
-                            command.Parameters.Add(new SqlParameter("@picture", model.Picture));
+                            command.Parameters.Add(new SqlParameter("@picture", model.Picture ?? "File/1.gif"));
                             //TODO Make count other
                             command.Parameters.Add(new SqlParameter("@count", model.Count));
 
-                            int productId = Convert.ToInt32(command.ExecuteNonQuery());
-
-                            model.Id = productId;
+                            command.ExecuteNonQuery();
 
                             //вставка в таблицу типа товара
                             command.CommandText = "INSERT INTO [type_product" + model.TypeId + "]" +
@@ -116,7 +114,7 @@ namespace DalAlexey.Repositories
                                                     "(" +
                                                     "@productId" +
                                                     "," +
-                                                    CreateProductAttributesQuery(model.Attributes) +
+                                                    CreateProductAttributesQuery(model.Attributes,model.ProductType.AttributeDescriptions) +
                                                     ")";
                             command.Parameters.Clear();
                             command.Parameters.Add(new SqlParameter("@productId", model.TypeId));
@@ -147,13 +145,20 @@ namespace DalAlexey.Repositories
             }
             return sb.ToString();
         }
-        private string CreateProductAttributesQuery(List<string> attributes)
+        private string CreateProductAttributesQuery(List<string> attributes, List<ProductTypeField> attributeDescription)
         {
             var sb = new StringBuilder();
             for (int i = 0; i < attributes.Count; i++)
             {
-                sb.Append("col");
-                sb.Append(i.ToString());
+                if (attributeDescription[i].AttributeType == 1)
+                {
+                    sb.Append("N'");
+                }
+                sb.Append(attributes[i]);
+                if (attributeDescription[i].AttributeType == 1)
+                {
+                    sb.Append("'");
+                }
                 if (i < (attributes.Count - 1))
                 {
                     sb.Append(",");
@@ -170,7 +175,6 @@ namespace DalAlexey.Repositories
                 connection.Open();
                 connection.ChangeDatabase(workDatabaseName);
 
-                DataTable dataTable = new DataTable();
 
                 using (SqlCommand command = new SqlCommand())
                 {
@@ -185,14 +189,14 @@ namespace DalAlexey.Repositories
                         while (reader.Read())
                         {
                             Product product = new Product();
-                            product.Id = dataTable.Rows[0].Field<int>("id");
-                            product.Name = dataTable.Rows[0].Field<string>("model");
-                            product.Manufacturer = dataTable.Rows[0].Field<string>("manufacturer");
-                            product.Price = dataTable.Rows[0].Field<int>("price");
-                            product.Warranty = dataTable.Rows[0].Field<string>("warranty");
-                            product.Delivery = dataTable.Rows[0].Field<string>("delivery");
-                            product.Picture = dataTable.Rows[0].Field<string>("picture");
-                            product.Count = dataTable.Rows[0].Field<int>("count");
+                            product.Id = reader.GetInt32(0);
+                            product.Name = reader.GetString(2);
+                            product.Manufacturer = reader.GetString(10);
+                            product.Price = reader.GetInt32(3);
+                            product.Warranty = reader.GetString(4);
+                            product.Delivery = reader.GetString(8);
+                            product.Picture = reader.GetString(5);
+                            product.Count = reader.GetInt32(0);
                             products.Add(product);
                         }
                     }

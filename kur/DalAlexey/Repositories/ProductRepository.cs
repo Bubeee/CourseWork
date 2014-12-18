@@ -22,28 +22,28 @@ namespace DalAlexey.Repositories
                 connection.Open();
                 connection.ChangeDatabase(workDatabaseName);
 
-                DataTable dataTable = new DataTable();
-
                 using (SqlCommand command = new SqlCommand())
                 {
                     command.Connection = connection;
                     command.CommandText = "SELECT [p].[id],[p].[type_id],[p].model,[p].[price],[p].[warranty],[p].[picture]," +
                         "[p].[count],[p].[delivery_id],[d].name AS [delivery],[p].[manufacturer_id],[m].name AS [manufacturer] FROM [product] AS [p] JOIN [manufacturer] AS [m] ON [manufacturer_id]=[m].[id] JOIN [delivery]AS [d] ON [delivery_id]=[d].[id] WHERE [p].[id]=(@productid)";
                     command.Parameters.Add(new SqlParameter("@productid", productId));//Здесь это id товара
-                    dataTable.Load(command.ExecuteReader());
-
-                    product.Id = dataTable.Rows[0].Field<int>("id");
-                    product.Name = dataTable.Rows[0].Field<string>("model");
-                    product.Manufacturer = dataTable.Rows[0].Field<string>("manufacturer");
-                    product.Price = dataTable.Rows[0].Field<int>("price");
-                    product.Warranty = dataTable.Rows[0].Field<string>("warranty");
-                    product.Delivery = dataTable.Rows[0].Field<string>("delivery");
-                    product.Picture = dataTable.Rows[0].Field<string>("picture");
-                    product.Count = dataTable.Rows[0].Field<int>("count");
-
                     int productTypeId;
-                    productTypeId = dataTable.Rows[0].Field<int>("type_id");
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        reader.Read();
+                        product.Id = reader.GetInt32(0);
+                        product.Name = reader.GetString(2);
+                        product.Manufacturer = reader.GetString(10);
+                        product.Price = reader.GetInt32(3);
+                        product.Warranty = reader.GetString(4);
+                        product.Delivery = reader.GetString(8);
+                        product.Picture = reader.GetString(5);
+                        product.Count = reader.GetInt32(6);
 
+
+                        productTypeId = reader.GetInt32(1);
+                    }
                     //Название таблицы с этим типом товара
                     command.CommandText = "SELECT [table_name] FROM [type_product] WHERE id = (@producttypeid);";
                     command.Parameters[0].ParameterName = "@producttypeid";
@@ -132,7 +132,6 @@ namespace DalAlexey.Repositories
             }
             return 1;
         }
-
         private string CreateProductColumnsQuery(int countColumns)
         {
             var sb = new StringBuilder();
@@ -224,6 +223,7 @@ namespace DalAlexey.Repositories
             }
             return products;
         }
+
         public void AddManufacturer(string manufacturerName, string manufacturerInfo)
         {
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -260,19 +260,58 @@ namespace DalAlexey.Repositories
                 }
             }
         }
+
         public Dictionary<int, string> GetManuf()
         {
-            throw new System.NotImplementedException();
+            var manufacturers = new Dictionary<int, string>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                connection.ChangeDatabase(workDatabaseName);
+
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT [id],[name] FROM [manufacturer] ORDER BY [id]";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            manufacturers.Add(reader.GetInt32(0), reader.GetString(1));
+                        }
+                    }
+                }
+            }
+            return manufacturers;
         }
 
-      public Dictionary<int, string> GetDeliveries()
-      {
-        throw new NotImplementedException();
-      }
+        public Dictionary<int, string> GetDeliveries()
+        {
+            var deliveries = new Dictionary<int, string>();
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                connection.Open();
+                connection.ChangeDatabase(workDatabaseName);
 
-      public Dictionary<int, string> GetStorages()
-      {
-        throw new NotImplementedException();
-      }
+                using (SqlCommand command = new SqlCommand())
+                {
+                    command.Connection = connection;
+                    command.CommandText = "SELECT [id],[name] FROM [delivery] ORDER BY [id]";
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            deliveries.Add(reader.GetInt32(0), reader.GetString(1));
+                        }
+                    }
+                }
+            }
+            return deliveries;
+        }
+
+        public Dictionary<int, string> GetStorages()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
